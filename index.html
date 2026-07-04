@@ -120,7 +120,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .pill-ok { background: var(--teal-bg); color: var(--teal-text); }
 .pill-no { background: var(--coral-bg); color: var(--coral-text); }
 .pill-mid { background: var(--amber-bg); color: var(--amber-text); }
-.racha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.racha-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
 .racha-box { border-radius: var(--radius); padding: 14px; text-align: center; }
 .racha-box-prot { background: var(--purple-bg); }
 .racha-box-levo { background: var(--teal-bg); }
@@ -144,6 +144,30 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .prog-peso { font-weight: 600; color: var(--text); min-width: 60px; }
 .prog-trend { font-size: 14px; }
 .empty { text-align: center; color: var(--text3); font-size: 13px; padding: 32px 0; }
+/* ── PROGRESIÓN ── */
+.prog-rutina-header { display: flex; align-items: center; gap: 8px; margin: 20px 0 10px; }
+.prog-rutina-icon { font-size: 20px; }
+.prog-rutina-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.prog-rutina-count { font-size: 11px; color: var(--text3); margin-left: auto; }
+.prog2-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 14px 16px; margin-bottom: 8px; }
+.prog2-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 10px; display: flex; align-items: flex-start; gap: 6px; }
+.prog2-pausa { font-size: 10px; font-weight: 600; color: var(--coral-text); background: var(--coral-bg); padding: 1px 6px; border-radius: 10px; margin-left: 4px; flex-shrink: 0; margin-top: 2px; }
+.prog2-sesiones { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.prog2-chip { display: flex; flex-direction: column; align-items: center; gap: 2px; background: var(--surface2); border-radius: 8px; padding: 6px 10px; min-width: 52px; }
+.prog2-chip-fecha { font-size: 10px; color: var(--text3); }
+.prog2-chip-peso { font-size: 12px; font-weight: 700; color: var(--text); }
+.prog2-chip-reps { font-size: 10px; color: var(--text2); }
+.prog2-chip.latest { background: var(--purple-bg); border: 1px solid var(--purple); }
+.prog2-chip.latest .prog2-chip-peso { color: var(--purple-text); }
+.prog2-chip.up { background: var(--teal-bg); border: 1px solid var(--teal); }
+.prog2-chip.up .prog2-chip-peso { color: var(--teal-text); }
+.prog2-trend { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text3); margin-top: 4px; }
+.prog2-trend-arrow { font-size: 13px; }
+.prog2-nodata { font-size: 11px; color: var(--text3); font-style: italic; padding: 4px 0; }
+.prog2-svg-wrap { margin: 6px 0 2px; }
+.prog-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.prog-filter-btn { font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text2); cursor: pointer; transition: all .15s; }
+.prog-filter-btn.active { background: var(--purple-bg); border-color: var(--purple); color: var(--purple-text); }
 @media (max-width: 380px) {
   .macro-val { font-size: 16px; }
   .macro-grid { gap: 5px; }
@@ -164,8 +188,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div class="nav-tab active" onclick="switchTab('nutricion',this)"><span class="nav-tab-icon">🥗</span>Nutrición</div>
   <div class="nav-tab" onclick="switchTab('entreno',this)"><span class="nav-tab-icon">💪</span>Entreno</div>
   <div class="nav-tab" onclick="switchTab('bienestar',this)"><span class="nav-tab-icon">🌿</span>Bienestar</div>
-  <div class="nav-tab" onclick="switchTab('transito',this)"><span class="nav-tab-icon">🕐</span>Tránsito</div>
-  <div class="nav-tab" onclick="switchTab('semana',this)"><span class="nav-tab-icon">📊</span>Semana</div>
+  <div class="nav-tab" onclick="switchTab('semana',this)"><span class="nav-tab-icon">📊</span>Resumen</div>
+  <div class="nav-tab" onclick="switchTab('progresion',this)"><span class="nav-tab-icon">📈</span>Progresión</div>
 </div>
 
 <!-- NUTRICIÓN -->
@@ -210,29 +234,54 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div id="bienestar-content"></div>
 </div>
 
-<!-- TRÁNSITO -->
-<div class="panel" id="panel-transito">
-  <div class="section-label">Registro de tránsito intestinal</div>
-  <div id="transit-chart"></div>
-  <div id="transit-list"></div>
-</div>
-
-<!-- SEMANA -->
+<!-- RESUMEN -->
 <div class="panel" id="panel-semana">
   <div class="racha-grid" id="racha-grid"></div>
-  <div id="weekly-chart"></div>
-  <div id="wellbeing-trend-chart"></div>
-  <div id="progresion-pesos"></div>
-  <div class="section-label">Músculos trabajados esta semana</div>
-  <div class="card" id="musculos-semana"></div>
+
+  <!-- Selector período -->
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="prog-filter-btn active" id="btn-periodo-todo" onclick="setPeriodo('todo')">📋 Todo</button>
+      <button class="prog-filter-btn" id="btn-periodo-mes" onclick="setPeriodo('mes')">🗓 Mes</button>
+      <button class="prog-filter-btn" id="btn-periodo-semana" onclick="setPeriodo('semana')">📅 Semana</button>
+    </div>
+    <div id="selector-mes" style="display:none">
+      <select id="select-mes" onchange="renderSemana()" style="width:100%;padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:13px"></select>
+    </div>
+    <div id="selector-fechas" style="display:none;gap:8px;align-items:center;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:4px;flex:1">
+        <label style="font-size:11px;color:var(--text3)">Desde</label>
+        <input type="date" id="fecha-desde" onchange="renderSemana()" style="padding:7px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:13px;width:100%">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;flex:1">
+        <label style="font-size:11px;color:var(--text3)">Hasta</label>
+        <input type="date" id="fecha-hasta" onchange="renderSemana()" style="padding:7px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:13px;width:100%">
+      </div>
+    </div>
+  </div>
+
   <div class="section-label">Macros vs objetivo</div>
   <div class="card" style="overflow-x:auto"><table class="weekly-table" id="weekly-table"></table></div>
+
+  <div class="section-label">Músculos trabajados</div>
+  <div class="card" id="musculos-semana"></div>
+
   <div class="section-label">Entrenamiento</div>
   <div class="card" id="weekly-entreno"></div>
-  <div class="section-label">Bienestar semanal</div>
+
+  <div id="progresion-pesos"></div>
+
+  <div class="section-label">Tendencia de bienestar</div>
+  <div id="wellbeing-trend-chart"></div>
+
+  <div class="section-label">Bienestar por día</div>
   <div class="card" id="weekly-bienestar"></div>
-  <div class="section-label">Tránsito</div>
-  <div class="card" id="weekly-transito"></div>
+</div>
+
+<!-- PROGRESIÓN -->
+<div class="panel" id="panel-progresion">
+  <div class="prog-filter" id="prog-filter"></div>
+  <div id="progresion-content"></div>
 </div>
 
 <script>
@@ -365,71 +414,99 @@ const DATA = {
         { time: 'Cena', name: '1 porción tarta atún/acelga/ricota + 120g remolacha + 80g zanahoria + 72g cherrys + 1 mandarina', kcal: 375, prot: 31, carbs: 39, fat: 10 },
       ]
     },
+    '2026-07-03': {
+      tipo: 'gym',
+      totals: { kcal: 1520, prot: 111, carbs: 187, fat: 38 },
+      meals: [
+        { time: 'Desayuno', name: '2 huevos + 2 claras + 23g queso cremoso Tregar Light + 120g acelga + 60g cherrys + 50g pan sarraceno s/gluten + 75g yogur bebible proteico', kcal: 450, prot: 34, carbs: 47, fat: 15 },
+        { time: 'Almuerzo', name: '1 porción tarta atún/acelga/ricota + 100g remolacha hervida + 150g batata + 18g lechuga + 90g zanahoria + 100g cherrys', kcal: 477, prot: 34, carbs: 62, fat: 11 },
+        { time: 'Merienda', name: '170g yogur griego casero + 1 medida proteína (30g) + 77g banana + 26g frutos rojos', kcal: 303, prot: 33, carbs: 30, fat: 5 },
+        { time: 'Cena', name: '40g fideos Wakas + 82g cherrys + 150g zucchini + 9g parmesano + 3g ghee + salsa de soja + 1 mandarina', kcal: 290, prot: 10, carbs: 49, fat: 7 },
+      ]
+    },
   },
   entreno: {
+    '2026-07-03': {
+      tipo: 'Brazos', duracion: '~1h45 min', feeling: 'great', feelingText: 'Muy buena sesión. Subió peso en curl mancuernas, martillo y kickback. Pullover reactivado. Técnica a seguir puliendo.',
+      ejercicios: [
+        { name: 'Curl con barra EZ', detalle: '4 x 12', peso: 'barra sola', pesoKg: 0, prev: 'barra sola' },
+        { name: 'Russian twist', detalle: '4 x 20', peso: '5 kg', pesoKg: 5, prev: '5 kg' },
+        { name: 'Curl con mancuernas alterno', detalle: '3 x 12 c/l — izquierdo más débil', peso: '4 kg', pesoKg: 4, prev: '3 kg' },
+        { name: 'Plancha lateral con toque de cadera', detalle: '3 x 12 c/l', peso: '—', pesoKg: null, prev: null },
+        { name: 'Curl martillo', detalle: '3 x 12', peso: '4 kg', pesoKg: 4, prev: '3 kg' },
+        { name: 'Woodchop en polea', detalle: '3 x 12 c/l', peso: '10 kg', pesoKg: 10, prev: '10 kg' },
+        { name: 'Curl en polea baja', detalle: '3 x 15', peso: '10 kg', pesoKg: 10, prev: '10 kg' },
+        { name: 'Bicicleta', detalle: '3 x 30 reps', peso: '—', pesoKg: null, prev: null },
+        { name: 'Pullover con mancuerna', detalle: '3 x 12 — leve tensión hombro der., no limitante. Reactivado (7 kg anterior causaba dolor)', peso: '5 kg', pesoKg: 5, prev: '7 kg' },
+        { name: 'Fondos en banco — dips', detalle: '3 x 14 reps', peso: 'peso corporal', pesoKg: null, prev: null },
+        { name: 'Extensión tríceps polea alta', detalle: '3 x 15', peso: '10 kg', pesoKg: 10, prev: '10 kg' },
+        { name: 'Kickback de tríceps con mancuerna', detalle: '3 x 12 c/l', peso: '4 kg', pesoKg: 4, prev: 'primer registro' },
+        { name: 'Press francés ⚠️ EN PAUSA', detalle: 'No realizado — en pausa por hombro derecho', peso: '—', pesoKg: null, prev: null, incompleto: true },
+      ]
+    },
     '2026-06-22': {
       tipo: 'Glúteos', duracion: '~75 min', feeling: 'great', feelingText: 'Sentí mucho el glúteo, algo en piernas',
       ejercicios: [
-        { name: 'Wall sit + Squats + Lunges (calentamiento)', detalle: '2 rounds — 30 seg / 10 reps / 12 reps', peso: 'sin peso', prev: null },
-        { name: 'Hip thrust con barra', detalle: '3 x 12', peso: '60 kg', prev: null },
-        { name: 'Isométrico de hip con banda', detalle: '4 x 45 seg + 20 sumo squat entre rounds', peso: 'banda / 10 kg', prev: null },
-        { name: 'Peso muerto rumano unilateral', detalle: '3 rounds x 8-8 por lado', peso: '10 kg', prev: null },
-        { name: 'Plancha lateral con mancuerna', detalle: '3 rounds x 40-40 seg', peso: 'mancuerna', prev: null },
-        { name: 'Hip circles + glúteo 4 apoyos con banda', detalle: '3 rounds — 2x20 / 2x15 por lado', peso: 'banda / 5 kg', prev: null },
+        { name: 'Wall sit + Squats + Lunges (calentamiento)', detalle: '2 rounds — 30 seg / 10 reps / 12 reps', peso: 'sin peso', pesoKg: null, prev: null },
+        { name: 'Hip thrust con barra', detalle: '3 x 12', peso: '60 kg', pesoKg: 60, prev: null },
+        { name: 'Isométrico de hip con banda', detalle: '4 x 45 seg + 20 sumo squat entre rounds', peso: 'banda / 10 kg', pesoKg: 10, prev: null },
+        { name: 'Peso muerto rumano con mancuernas', detalle: '3 rounds x 8-8 por lado', peso: '10 kg', pesoKg: 10, prev: null },
+        { name: 'Plancha lateral con mancuerna', detalle: '3 rounds x 40-40 seg', peso: 'mancuerna', pesoKg: null, prev: null },
+        { name: 'Hip circles + glúteo 4 apoyos con banda', detalle: '3 rounds — 2x20 / 2x15 por lado', peso: 'banda / 5 kg', pesoKg: 5, prev: null },
       ]
     },
     '2026-06-24': {
       tipo: 'Piernas', duracion: '~70 min', feeling: 'ok', feelingText: 'Faltaron nórdicos, pull through y sumo squat veloc.',
       ejercicios: [
-        { name: 'Cinta (calentamiento)', detalle: '5 min', peso: '—', prev: null },
-        { name: 'Wall sit + Squats + Up&down plancha', detalle: '2 rounds — 30 seg / 10 / 10 reps', peso: 'sin peso', prev: null },
-        { name: 'Prensa de piernas', detalle: '4 x 8 rango completo', peso: '40 kg', prev: null },
-        { name: 'Prensa a fallo', detalle: '2 x fallo — pisada media al ancho de caderas', peso: '40 kg', prev: null },
-        { name: 'Bulgarian split squat doble mancuerna', detalle: '3 x 8 por lado — tempo 3-1-0', peso: 'mancuernas', prev: null },
-        { name: 'Abdominales', detalle: '20 enteros + 10 inversos + 30 seg plancha', peso: '—', prev: null },
+        { name: 'Cinta (calentamiento)', detalle: '5 min', peso: '—', pesoKg: null, prev: null },
+        { name: 'Wall sit + Squats + Up&down plancha', detalle: '2 rounds — 30 seg / 10 / 10 reps', peso: 'sin peso', pesoKg: null, prev: null },
+        { name: 'Prensa de piernas', detalle: '4 x 8 rango completo', peso: '40 kg', pesoKg: 40, prev: null },
+        { name: 'Prensa a fallo', detalle: '2 x fallo — pisada media al ancho de caderas', peso: '40 kg', pesoKg: 40, prev: null },
+        { name: 'Bulgarian split squat con mancuernas', detalle: '3 x 8 por lado — tempo 3-1-0', peso: 'mancuernas', pesoKg: null, prev: null },
+        { name: 'Abdominales', detalle: '20 enteros + 10 inversos + 30 seg plancha', peso: '—', pesoKg: null, prev: null },
       ]
     },
     '2026-06-26': {
       tipo: 'Hombros', duracion: '~75 min', feeling: 'ok', feelingText: 'Hombro izquierdo más débil — fallo antes de completar reps en elevaciones. Pájaros con drop set.',
       ejercicios: [
-        { name: 'Calentamiento manguito rotador', detalle: 'OK — banda elástica', peso: '—', prev: null },
-        { name: 'Press militar con mancuernas sentada', detalle: '4 x 10', peso: '5 kg', prev: null },
-        { name: 'Elevación frontal con mancuernas', detalle: '3 x 12 — fallo antes del final en izquierdo', peso: '3 kg', prev: null },
-        { name: 'Elevación lateral con mancuernas', detalle: '3 x 15 — fallo antes del final en izquierdo', peso: '3 kg', prev: null },
-        { name: 'Remo al mentón con barra ondulada', detalle: '3 x 12', peso: 'barra + 2.5 kg', prev: null },
-        { name: 'Face pull en polea con cuerda', detalle: '3 x 15', peso: '17 kg', prev: null },
-        { name: 'Pájaros en peck deck invertida', detalle: 'Serie 1: 11 kg | Serie 2: 17 kg (al fallo) | Serie 3: drop 17→11 kg sin terminar', peso: '11–17 kg', prev: null },
+        { name: 'Calentamiento manguito rotador', detalle: 'OK — banda elástica', peso: '—', pesoKg: null, prev: null },
+        { name: 'Press militar con mancuernas sentada', detalle: '4 x 10', peso: '5 kg', pesoKg: 5, prev: null },
+        { name: 'Elevación frontal con mancuernas', detalle: '3 x 12 — fallo antes del final en izquierdo', peso: '3 kg', pesoKg: 3, prev: null },
+        { name: 'Elevación lateral con mancuernas', detalle: '3 x 15 — fallo antes del final en izquierdo', peso: '3 kg', pesoKg: 3, prev: null },
+        { name: 'Remo al mentón con barra', detalle: '3 x 12', peso: 'barra + 2.5 kg', pesoKg: 2.5, prev: null },
+        { name: 'Face pull en polea con cuerda', detalle: '3 x 15', peso: '17 kg', pesoKg: 17, prev: null },
+        { name: 'Pájaros en peck deck invertida', detalle: 'Serie 1: 11 kg | Serie 2: 17 kg (al fallo) | Serie 3: drop 17→11 kg sin terminar', peso: '11–17 kg', pesoKg: 17, prev: null },
       ]
     },
     '2026-06-29': {
       tipo: 'Glúteos', duracion: '~80 min + caminata 30 min', feeling: 'ok', feelingText: 'Resfriada. Leve dolor rodilla izq en goblet y cintura der en PDM. Apurada — D2 y F1 no completados.',
       ejercicios: [
-        { name: 'Hip thrust con barra (A1)', detalle: '4 x 15 — casi al fallo', peso: '9 kg + 52.5 kg', prev: '60 kg' },
-        { name: 'Plancha frontal (A2)', detalle: 'Completo', peso: '—', prev: null },
-        { name: 'Sentadilla goblet con kettlebell (B1)', detalle: '4 x 12 — leve dolor rodilla izquierda', peso: '12 kg', prev: null },
-        { name: 'Dead bug (B2)', detalle: 'Completo', peso: '—', prev: null },
-        { name: 'Peso muerto rumano con mancuernas (C1)', detalle: '3 x 12 — sobrada, leve dolor cintura derecha', peso: '2 x 10 kg', prev: null },
-        { name: 'Bicicleta (C2)', detalle: 'Completo', peso: '—', prev: null },
-        { name: 'Patada de glúteo en polea baja (D1)', detalle: '3 reps por lado — sin extra del izquierdo', peso: '15 kg', prev: null },
-        { name: 'Elevación de piernas (D2) ⚠️ NO COMPLETADO', detalle: 'No se hizo en casa', peso: '—', prev: null },
-        { name: 'Abducción en máquina (E1)', detalle: '3 x 20', peso: '17 kg', prev: null },
-        { name: 'Superman (F1) ⚠️ NO COMPLETADO', detalle: 'Solo 1 serie en gym — no se completó en casa', peso: '—', prev: null },
+        { name: 'Hip thrust con barra', detalle: '4 x 15 — casi al fallo', peso: '61.5 kg (9+52.5)', pesoKg: 61.5, prev: '60 kg' },
+        { name: 'Plancha frontal', detalle: 'Completo', peso: '—', pesoKg: null, prev: null },
+        { name: 'Sentadilla goblet con kettlebell', detalle: '4 x 12 — leve dolor rodilla izquierda', peso: '12 kg', pesoKg: 12, prev: null },
+        { name: 'Dead bug', detalle: 'Completo', peso: '—', pesoKg: null, prev: null },
+        { name: 'Peso muerto rumano con mancuernas', detalle: '3 x 12 — sobrada, leve dolor cintura derecha', peso: '2 x 10 kg', pesoKg: 10, prev: null },
+        { name: 'Bicicleta', detalle: 'Completo', peso: '—', pesoKg: null, prev: null },
+        { name: 'Patada de glúteo en polea baja', detalle: '3 reps por lado — sin extra del izquierdo', peso: '15 kg', pesoKg: 15, prev: null },
+        { name: 'Elevación de piernas acostada', detalle: '⚠️ No completado — no se hizo en casa', peso: '—', pesoKg: null, prev: null, incompleto: true },
+        { name: 'Abducción en máquina', detalle: '3 x 20', peso: '17 kg', pesoKg: 17, prev: null },
+        { name: 'Superman', detalle: '⚠️ Solo 1 serie en gym — no se completó en casa', peso: '—', pesoKg: null, prev: null, incompleto: true },
       ]
     },
     '2026-06-28': {
       tipo: 'Brazos', duracion: '~105 min', feeling: 'ok', feelingText: 'Bien en general, cansada al final. Tensión hombro derecho en pullover y press francés — en pausa hasta ganar movilidad torácica.',
       ejercicios: [
-        { name: 'Curl con barra Z (A1)', detalle: '4 x 12', peso: 'barra sola', prev: null },
-        { name: 'Russian twist (A2)', detalle: '4 x 20', peso: '5 kg', prev: null },
-        { name: 'Curl con mancuernas alterno (B1)', detalle: '3 x 12 c/l', peso: '3 kg', prev: null },
-        { name: 'Curl martillo (C1)', detalle: '3 x 12', peso: '3 kg', prev: null },
-        { name: 'Woodchop en polea (C2)', detalle: '3 x 12 c/l', peso: '10 kg', prev: null },
-        { name: 'Curl en polea baja (D1)', detalle: '3 x 12', peso: '10 kg', prev: null },
-        { name: 'Bicicleta (D2)', detalle: '3 x 20', peso: '—', prev: null },
-        { name: 'Pullover con mancuerna ⚠️ EN PAUSA', detalle: 'Tensión rara hombro derecho', peso: '7 kg', prev: null },
-        { name: 'Press francés ⚠️ EN PAUSA', detalle: '2 x 12 + 1 x 8 — misma tensión hombro derecho', peso: '3 kg', prev: null },
-        { name: 'Extensión tríceps polea alta (F1)', detalle: '3 x 15', peso: '10 kg', prev: null },
-        { name: 'Fondos en banco — dips (G1)', detalle: '3 x fallo — 12 / 12 / 10 reps', peso: 'peso corporal', prev: null },
+        { name: 'Curl con barra EZ', detalle: '4 x 12', peso: 'barra sola', pesoKg: 0, prev: null },
+        { name: 'Russian twist', detalle: '4 x 20', peso: '5 kg', pesoKg: 5, prev: null },
+        { name: 'Curl con mancuernas alterno', detalle: '3 x 12 c/l', peso: '3 kg', pesoKg: 3, prev: null },
+        { name: 'Curl martillo', detalle: '3 x 12', peso: '3 kg', pesoKg: 3, prev: null },
+        { name: 'Woodchop en polea', detalle: '3 x 12 c/l', peso: '10 kg', pesoKg: 10, prev: null },
+        { name: 'Curl en polea baja', detalle: '3 x 12', peso: '10 kg', pesoKg: 10, prev: null },
+        { name: 'Bicicleta', detalle: '3 x 20', peso: '—', pesoKg: null, prev: null },
+        { name: 'Pullover con mancuerna', detalle: 'Tensión rara hombro derecho', peso: '7 kg', pesoKg: 7, prev: null, pausa: true },
+        { name: 'Press francés con mancuerna', detalle: '2 x 12 + 1 x 8 — misma tensión hombro derecho', peso: '3 kg', pesoKg: 3, prev: null, pausa: true },
+        { name: 'Extensión tríceps polea alta', detalle: '3 x 15', peso: '10 kg', pesoKg: 10, prev: null },
+        { name: 'Fondos en banco (dips)', detalle: '3 x fallo — 12 / 12 / 10 reps', peso: 'peso corporal', pesoKg: null, prev: null },
       ]
     },
   },
@@ -440,6 +517,7 @@ const DATA = {
     '2026-06-30': { energia: 3, sueno: 3, animo: 2, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '08:00', nota: 'Día duro — resfrío, mal sueño y la cabeza en Mila. Operación al día siguiente.' },
     '2026-07-01': { energia: 4, sueno: 3, animo: 3, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '08:00', nota: 'Día de descanso. Resfrío con tos. Operación de Mila ese día — nervios pero bien.' },
     '2026-07-02': { energia: 4, sueno: 4, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '06:00', nota: 'Fue a CABA, almuerzo afuera (Sottovoce). Hinchazón fuerte repentina a las 16.50 post-merienda (yogur del fondo + papaya) — panza dura y dolor, bajó a las 17.30 post-caminata. Mila con control post-cirugía, todo bien.' },
+    '2026-07-03': { energia: 5, sueno: 3, animo: 4, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '08:00', nota: 'Día contento y animado. Le costó dormir, se despertó a medianoche y se quedó dormida a la mañana. Hubiera querido hacer la rutina AM pero remontó bien el día.' },
   },
   transito: [
     { fecha: '2026-06-25', hora: null, nota: 'No fue en todo el día' },
@@ -450,6 +528,7 @@ const DATA = {
     { fecha: '2026-06-30', hora: '09:30', nota: '' },
     { fecha: '2026-07-01', hora: '09:30', nota: '' },
     { fecha: '2026-07-02', hora: '16:30', nota: '' },
+    { fecha: '2026-07-03', hora: '10:30', nota: '' },
   ]
 };
 
@@ -472,8 +551,8 @@ function dayScore(data){
   const goals={kcal:goalFor(data.tipo,'kcal'),prot:goalFor(data.tipo,'prot'),carbs:goalFor(data.tipo,'carbs'),fat:goalFor(data.tipo,'fat')};
   // proteína (3pts)
   max+=3; if(t.prot>=goals.prot*0.95)s+=3; else if(t.prot>=goals.prot*0.80)s+=2; else if(t.prot>=goals.prot*0.65)s+=1;
-  // calorías (2pts)
-  max+=2; const kp=t.kcal/goals.kcal; if(kp>=0.88&&kp<=1.1)s+=2; else if(kp>=0.80&&kp<=1.2)s+=1;
+  // calorías (2pts) — déficit moderado cuenta como éxito para definición
+  max+=2; const kp=t.kcal/goals.kcal; if(kp>=0.80&&kp<=1.1)s+=2; else if(kp>=0.70&&kp<=1.2)s+=1;
   // grasas (1pt)
   max+=1; if(t.fat<=goals.fat*1.1)s+=1;
   // carbos (1pt)
@@ -499,7 +578,8 @@ function generateInsights(data){
   if(t.prot>=goals.prot*0.95)ins.push({type:'ok',icon:'💪',title:'Proteína alcanzada',body:`${t.prot}g — objetivo cumplido. Recuperación muscular asegurada.`});
   else if(t.prot<goals.prot*0.80)ins.push({type:'alert',icon:'⚠️',title:'Proteína baja',body:`Solo ${t.prot}g de ${goals.prot}g objetivo.`});
   if(t.kcal>goals.kcal*1.15)ins.push({type:'warn',icon:'🔥',title:'Calorías por encima',body:`${t.kcal} kcal vs objetivo de ${goals.kcal}. Sin drama — retomá mañana.`});
-  else if(t.kcal<goals.kcal*0.85)ins.push({type:'warn',icon:'📉',title:'Calorías bajas',body:`${t.kcal} kcal. Poco combustible para recuperar.`});
+  else if(t.kcal<goals.kcal*0.80)ins.push({type:'warn',icon:'📉',title:'Calorías muy bajas',body:`${t.kcal} kcal. Déficit muy grande — puede afectar la recuperación.`});
+  else if(t.kcal<goals.kcal*0.95)ins.push({type:'ok',icon:'✅',title:'Déficit moderado',body:`${t.kcal} kcal — por debajo del objetivo. Bien para definición.`});
   if(t.fat>goals.fat*1.2)ins.push({type:'warn',icon:'🥑',title:'Grasas elevadas',body:`${t.fat}g. Probablemente de buenas fuentes.`});
   if(data.tipo==='gym'&&t.carbs<80)ins.push({type:'warn',icon:'🍠',title:'Carbos bajos para gym',body:'Sumá batata, arroz o fruta en el próximo día de gym.'});
   const b=DATA.bienestar[DAYS_ORDER[idxN]];
@@ -542,9 +622,11 @@ function renderBienestar(){
   const d=BIENESTAR_DAYS[idxB];
   document.getElementById('dn-label-b').textContent=dateLabel(d);
   const data=DATA.bienestar[d];
+  const transitData=DATA.transito.find(t=>t.fecha===d);
   if(!data){document.getElementById('bienestar-content').innerHTML='<div class="empty">Sin registro de bienestar este día</div>';return;}
   const hLabel=['','Ninguna','Leve','Moderada','Alta','Muy alta'];
   const hColor=['','pill-ok','pill-ok','pill-mid','pill-no','pill-no'];
+  const transitHtml=`<div class="wb-card"><div class="wb-label">🚽 Tránsito</div>${transitData&&transitData.hora?`<span class="pill pill-ok">✓ ${transitData.hora}h</span>`:'<span class="pill pill-no">✗ No registrado</span>'}</div>`;
   document.getElementById('bienestar-content').innerHTML=`
     <div class="section-label">Estado general</div>
     <div class="wellbeing-grid">
@@ -552,6 +634,7 @@ function renderBienestar(){
       <div class="wb-card"><div class="wb-label">😴 Sueño</div><div>${stars(data.sueno)}</div></div>
       <div class="wb-card"><div class="wb-label">😊 Ánimo</div><div>${stars(data.animo)}</div></div>
       <div class="wb-card"><div class="wb-label">💧 Hinchazón</div><span class="pill ${hColor[data.hinchazon]}">${hLabel[data.hinchazon]}</span></div>
+      ${transitHtml}
     </div>
     <div class="section-label">Hashimoto · Levotiroxina 88mcg</div>
     <div class="hashi-card">
@@ -561,51 +644,91 @@ function renderBienestar(){
     ${data.nota?`<div class="section-label">Nota del día</div><div class="card"><div style="font-size:13px;color:var(--text2)">${data.nota}</div></div>`:''}`;
 }
 
-function renderTransito(){
-  const transitMap={};
-  DATA.transito.forEach(t=>transitMap[t.fecha]=t);
-  document.getElementById('transit-chart').innerHTML=`<div class="chart-wrap"><div class="chart-title">Últimos días registrados</div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">${DAYS_ORDER.map(d=>{
-    const nutriD=DATA.nutricion[d];if(!nutriD)return'';
-    const t=transitMap[d],ok=t&&t.hora;
-    return`<div style="display:flex;flex-direction:column;align-items:center;gap:4px;min-width:40px">
-      <div style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;background:${ok?'var(--teal-bg)':'var(--coral-bg)'}">${ok?'✅':'❌'}</div>
-      <div style="font-size:10px;color:var(--text3)">${dateLabel(d).split(' ')[0]}</div>
-      ${ok?`<div style="font-size:10px;color:var(--teal-text);font-weight:600">${t.hora}</div>`:''}
-    </div>`;
-  }).join('')}</div></div>`;
-  if(!DATA.transito.length){document.getElementById('transit-list').innerHTML='<div class="empty">Sin registros todavía</div>';return;}
-  document.getElementById('transit-list').innerHTML=DATA.transito.slice().reverse().map(t=>`<div class="transit-card"><div class="transit-icon">${t.hora?'✅':'❌'}</div><div><div class="transit-date">${dateLabel(t.fecha)}</div><div class="transit-time">${t.hora?'Hora: '+t.hora:'No fue'}${t.nota?' — '+t.nota:''}</div></div><span class="transit-badge ${t.hora?'badge-ok':'badge-no'}">${t.hora?'Sí':'No'}</span></div>`).join('');
+let periodoActual='todo';
+
+function setPeriodo(p){
+  periodoActual=p;
+  document.querySelectorAll('#btn-periodo-todo,#btn-periodo-mes,#btn-periodo-semana').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-periodo-'+p).classList.add('active');
+  document.getElementById('selector-mes').style.display=p==='mes'?'block':'none';
+  document.getElementById('selector-fechas').style.display=p==='semana'?'flex':'none';
+  renderSemana();
+}
+
+function getDiasEnPeriodo(){
+  const allDays=DAYS_ORDER;
+  if(periodoActual==='todo') return allDays;
+  if(periodoActual==='mes'){
+    const sel=document.getElementById('select-mes');
+    if(!sel||!sel.value) return allDays;
+    return allDays.filter(d=>d.startsWith(sel.value));
+  }
+  if(periodoActual==='semana'){
+    const desde=document.getElementById('fecha-desde')?.value;
+    const hasta=document.getElementById('fecha-hasta')?.value;
+    if(!desde||!hasta) return allDays;
+    return allDays.filter(d=>d>=desde&&d<=hasta);
+  }
+  return allDays;
 }
 
 function renderSemana(){
-  // Rachas
-  let rachaProt=0,rachaLevo=0;
+  // Llenar selector de meses
+  const meses=[...new Set(DAYS_ORDER.map(d=>d.substring(0,7)))].sort();
+  const selMes=document.getElementById('select-mes');
+  if(selMes&&selMes.options.length===0){
+    meses.forEach(m=>{const opt=document.createElement('option');opt.value=m;const [y,mo]=m.split('-');const names=['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];opt.textContent=names[parseInt(mo)]+' '+y;selMes.appendChild(opt);});
+    selMes.value=meses[meses.length-1];
+  }
+
+  const dias=getDiasEnPeriodo();
+
+  // Rachas (siempre sobre todos los datos)
+  let rachaProt=0,rachaLevo=0,rachaTrans=0;
   for(let i=DAYS_ORDER.length-1;i>=0;i--){const d=DAYS_ORDER[i],dd=DATA.nutricion[d];if(dd&&dd.totals.prot>=goalFor(dd.tipo,'prot')*0.90)rachaProt++;else break;}
   const levoKeys=Object.keys(DATA.bienestar).sort();
   for(let i=levoKeys.length-1;i>=0;i--){const b=DATA.bienestar[levoKeys[i]];if(b&&b.levotiroxina)rachaLevo++;else break;}
+  const transKeys=DAYS_ORDER.slice().reverse();
+  for(const d of transKeys){const t=DATA.transito.find(tr=>tr.fecha===d);if(t&&t.hora)rachaTrans++;else break;}
   document.getElementById('racha-grid').innerHTML=`
-    <div class="racha-box racha-box-prot"><div class="racha-num racha-num-prot">${rachaProt}</div><div class="racha-label racha-label-prot">días seguidos con proteína ≥90% 💪</div></div>
-    <div class="racha-box racha-box-levo"><div class="racha-num racha-num-levo">${rachaLevo}</div><div class="racha-label racha-label-levo">días seguidos con levotiroxina 💊</div></div>`;
+    <div class="racha-box racha-box-prot"><div class="racha-num racha-num-prot">${rachaProt}</div><div class="racha-label racha-label-prot">días seguidos proteína ≥90% 💪</div></div>
+    <div class="racha-box racha-box-levo"><div class="racha-num racha-num-levo">${rachaLevo}</div><div class="racha-label racha-label-levo">días seguidos levotiroxina 💊</div></div>
+    <div class="racha-box racha-box-prot" style="background:var(--teal-bg)"><div class="racha-num racha-num-prot" style="color:var(--teal-text)">${rachaTrans}</div><div class="racha-label racha-label-prot" style="color:var(--teal-text)">días seguidos tránsito 🚽</div></div>`;
 
-  // Gráfico calorías
-  const maxKcal=Math.max(...DAYS_ORDER.map(d=>DATA.nutricion[d]?.totals.kcal||0),1);
-  document.getElementById('weekly-chart').innerHTML=`<div class="chart-wrap"><div class="chart-title">Calorías por día</div><div class="chart-subtitle">Verde = en objetivo · Rojo = por encima · Amarillo = bajo</div><div class="chart-bars">${DAYS_ORDER.map(d=>{
-    const dd=DATA.nutricion[d];if(!dd)return'';
-    const goal=goalFor(dd.tipo,'kcal'),h=Math.round((dd.totals.kcal/maxKcal)*100);
-    const color=dd.totals.kcal>goal*1.1?'var(--coral)':dd.totals.kcal>goal*0.9?'var(--teal)':'var(--amber)';
-    return`<div class="chart-col"><div class="chart-val">${dd.totals.kcal}</div><div class="chart-bar-wrap"><div class="chart-bar" style="height:${h}%;background:${color}"></div></div><div class="chart-day-label">${dateLabel(d).split(' ')[0]}</div></div>`;
-  }).join('')}</div></div>`;
+  // Tabla macros del período
+  const macroKeys=[{key:'kcal',lbl:'Kcal',unit:''},{key:'prot',lbl:'Prot',unit:'g'},{key:'carbs',lbl:'Carbos',unit:'g'},{key:'fat',lbl:'Grasas',unit:'g'}];
+  const th='<tr><th class="w-lbl">Macro</th>'+dias.map(d=>`<th>${dateLabel(d).split(' ')[0]}<br><span style="font-weight:400;color:var(--text3)">${dateLabel(d).split(' ')[1]}</span></th>`).join('')+'<th style="color:var(--teal)">Prom.</th></tr>';
+  const rows=macroKeys.map(m=>{
+    const vals=dias.map(d=>DATA.nutricion[d]?.totals[m.key]).filter(v=>v!=null);
+    const avg=vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):null;
+    const avgGoal=m.key==='kcal'?GOALS.kcal:GOALS[m.key];
+    const avgCls=avg==null?'w-empty':avg/avgGoal>1.1?'w-over':avg/avgGoal>0.88?'w-ok':'w-low';
+    const cells=dias.map(d=>{const dd=DATA.nutricion[d];if(!dd)return'<td><span class="w-dot w-empty">—</span></td>';const val=dd.totals[m.key],goal=goalFor(dd.tipo,m.key),p=val/goal,cls=p>1.1?'w-over':p>0.88?'w-ok':'w-low';return`<td><span class="w-dot ${cls}">${val}${m.unit}</span></td>`;}).join('');
+    return`<tr><td class="w-lbl">${m.lbl}</td>${cells}<td><span class="w-dot ${avgCls}" style="font-weight:700">${avg!=null?avg+m.unit:'—'}</span></td></tr>`;
+  }).join('');
+  document.getElementById('weekly-table').innerHTML=th+rows;
 
-  // Gráfico tendencia bienestar (línea SVG)
-  const bDays=Object.keys(DATA.bienestar).sort();
-  if(bDays.length>=2){
+  // Músculos trabajados en el período
+  const musMap={Glúteos:'🍑',Piernas:'🦵',Hombros:'🏋️',Brazos:'💪',Espalda:'🔙',Core:'⬡'};
+  const muscTrabajados=new Set(dias.map(d=>DATA.entreno[d]?.tipo).filter(Boolean));
+  const allMusc=Object.keys(musMap);
+  document.getElementById('musculos-semana').innerHTML=`<div class="muscle-grid">${allMusc.map(m=>`<span class="muscle-pill ${muscTrabajados.has(m)?'done':''}">${musMap[m]} ${m}</span>`).join('')}</div><div style="font-size:11px;color:var(--text3);margin-top:6px">Verde = trabajado en el período</div>`;
+
+  // Entrenamiento del período
+  const entrenosDias=dias.filter(d=>DATA.entreno[d]);
+  document.getElementById('weekly-entreno').innerHTML=entrenosDias.map(d=>{const e=DATA.entreno[d];return`<div class="summary-row"><span>${dateLabel(d)}</span><span style="font-weight:600">${e.tipo}</span><span class="feeling-badge ${e.feeling==='great'?'feeling-great':e.feeling==='ok'?'feeling-ok':'feeling-hard'}" style="margin:0;padding:2px 8px;font-size:10px">${e.feeling==='great'?'✅ Muy bien':'⚠️ Regular'}</span></div>`;}).join('')||'<div class="empty">Sin datos</div>';
+
+  // Link progresión
+  document.getElementById('progresion-pesos').innerHTML=`<div style="background:var(--purple-bg);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="document.querySelector('.nav-tab:last-child').click()">
+    <div><div style="font-size:13px;font-weight:600;color:var(--purple-text)">📈 Ver progresión completa</div><div style="font-size:12px;color:var(--purple-text);opacity:.7;margin-top:2px">Todos los ejercicios de todas las rutinas</div></div>
+    <span style="font-size:18px;color:var(--purple-text)">›</span>
+  </div>`;
+
+  // Tendencia bienestar del período
+  const bDias=dias.filter(d=>DATA.bienestar[d]);
+  if(bDias.length>=2){
     const w=300,h=60,pad=20;
-    const points=(key)=>bDays.map((d,i)=>{
-      const b=DATA.bienestar[d];
-      const x=pad+(i/(bDays.length-1||1))*(w-2*pad);
-      const y=h-pad-((b[key]-1)/4)*(h-2*pad);
-      return`${x},${y}`;
-    }).join(' ');
+    const points=(key)=>bDias.map((d,i)=>{const b=DATA.bienestar[d];const x=pad+(i/(bDias.length-1||1))*(w-2*pad);const y=h-pad-((b[key]-1)/4)*(h-2*pad);return`${x},${y}`;}).join(' ');
     document.getElementById('wellbeing-trend-chart').innerHTML=`<div class="chart-wrap">
       <div class="chart-title">Tendencia de bienestar</div>
       <div class="chart-subtitle">⚡ Energía · 😴 Sueño · 😊 Ánimo</div>
@@ -613,65 +736,268 @@ function renderSemana(){
         <polyline points="${points('energia')}" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linejoin="round"/>
         <polyline points="${points('sueno')}" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linejoin="round"/>
         <polyline points="${points('animo')}" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linejoin="round"/>
-        ${bDays.map((d,i)=>{const b=DATA.bienestar[d];const x=pad+(i/(bDays.length-1||1))*(w-2*pad);return`<text x="${x}" y="${h-4}" text-anchor="middle" font-size="9" fill="var(--text3)">${dateLabel(d).split(' ')[0]}</text>`;}).join('')}
+        ${bDias.map((d,i)=>{const x=pad+(i/(bDias.length-1||1))*(w-2*pad);return`<text x="${x}" y="${h-4}" text-anchor="middle" font-size="9" fill="var(--text3)">${dateLabel(d).split(' ')[0]}</text>`;}).join('')}
       </svg>
       <div style="display:flex;gap:12px;font-size:11px;color:var(--text2);margin-top:4px">
-        <span style="color:var(--amber)">■ Energía</span>
-        <span style="color:var(--blue)">■ Sueño</span>
-        <span style="color:var(--teal)">■ Ánimo</span>
+        <span style="color:var(--amber)">■ Energía</span><span style="color:var(--blue)">■ Sueño</span><span style="color:var(--teal)">■ Ánimo</span>
       </div>
     </div>`;
-  }else{document.getElementById('wellbeing-trend-chart').innerHTML='';}
+  } else { document.getElementById('wellbeing-trend-chart').innerHTML=''; }
 
-  // Progresión de pesos ejercicios clave
-  const keyEx=['Hip thrust con barra','Prensa de piernas','Press militar con mancuernas sentada','Extensión tríceps polea alta'];
-  const progMap={};
-  ENTRENO_DAYS.forEach(d=>{
-    const e=DATA.entreno[d];
-    e.ejercicios.forEach(ex=>{
-      const match=keyEx.find(k=>ex.name.toLowerCase().includes(k.toLowerCase().split(' ')[0])&&ex.name.toLowerCase().includes(k.toLowerCase().split(' ')[1]||''));
-      if(match){if(!progMap[match])progMap[match]=[];progMap[match].push({fecha:d,peso:ex.peso});}
+  // Bienestar por día con promedios
+  const bKeys=['energia','sueno','animo','hinchazon'];
+  const bLabels={energia:'⚡ Energía',sueno:'😴 Sueño',animo:'😊 Ánimo',hinchazon:'💧 Hinchazón'};
+  const promedios={};
+  bKeys.forEach(k=>{const vals=bDias.map(d=>DATA.bienestar[d][k]).filter(v=>v!=null);promedios[k]=vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):null;});
+  const promRow=`<div class="summary-row" style="background:var(--surface2);border-radius:8px;padding:8px 12px;margin-bottom:4px">
+    <span style="font-weight:600;font-size:12px">Promedio período</span>
+    <span style="font-size:12px">⚡${promedios.energia||'—'} 😴${promedios.sueno||'—'} 😊${promedios.animo||'—'} 💧${promedios.hinchazon||'—'}</span>
+  </div>`;
+  document.getElementById('weekly-bienestar').innerHTML=promRow+bDias.map(d=>{const b=DATA.bienestar[d];return`<div class="summary-row"><span>${dateLabel(d)}</span><span style="font-size:12px">⚡${b.energia} 😴${b.sueno} 😊${b.animo} 💧${b.hinchazon}</span><span class="pill ${b.levotiroxina?'pill-ok':'pill-no'}" style="font-size:10px">${b.levotiroxina?'💊 ✓':'💊 ✗'}</span></div>`;}).join('')||'<div class="empty">Sin datos</div>';
+}
+
+
+// ── PROGRESIÓN ──────────────────────────────────────────────────────────
+// Rutinas canónicas con ejercicios del plan. Usamos esto para mostrar
+// todos los ejercicios del plan, incluso si aún no hay sesiones para ellos.
+const RUTINAS_PLAN = {
+  'Glúteos': {
+    icon: '🍑', color: 'var(--purple)',
+    ejercicios: [
+      'Hip thrust con barra','Sentadilla goblet con kettlebell',
+      'Peso muerto rumano con mancuernas','Patada de glúteo en polea baja',
+      'Abducción en máquina','Puente de glúteo unilateral','Superman',
+      'Hip circles + glúteo 4 apoyos con banda','Isométrico de hip con banda',
+      'Plancha frontal','Dead bug','Elevación de piernas acostada','Bicicleta',
+    ]
+  },
+  'Piernas': {
+    icon: '🦵', color: 'var(--teal)',
+    ejercicios: [
+      'Prensa de piernas','Prensa a fallo',
+      'Extensión de cuádriceps en máquina','Curl de isquiotibiales acostada',
+      'Estocadas con mancuernas (lunges)','Sentadilla sumo con mancuerna',
+      'Bulgarian split squat con mancuernas','Elevación de pantorrillas de pie',
+      'Remo con mancuerna unilateral',
+      'Crunch clásico','Reverse crunch','Toe touches','Hollow hold',
+    ]
+  },
+  'Brazos': {
+    icon: '💪', color: 'var(--amber)',
+    ejercicios: [
+      'Curl con barra EZ','Curl con mancuernas alterno','Curl martillo','Curl en polea baja',
+      'Extensión tríceps polea alta','Fondos en banco (dips)','Kickback de tríceps con mancuerna',
+      'Pullover con mancuerna','Press francés con mancuerna',
+      'Russian twist','Woodchop en polea','Bicicleta','Plancha lateral con toque de cadera',
+    ]
+  },
+  'Hombros': {
+    icon: '🏋️', color: 'var(--blue)',
+    ejercicios: [
+      'Press militar con mancuernas sentada','Elevación frontal con mancuernas',
+      'Elevación lateral con mancuernas','Remo al mentón con barra',
+      'Reverse fly con mancuernas','Face pull en polea con cuerda',
+      'Pájaros en peck deck invertida','Encogimiento de trapecios (shrugs)',
+      'Ab wheel / roll-out','Bird dog','Plancha con toque de hombro',
+      'Plancha frontal con elevación de pierna',
+    ]
+  },
+  'Glúteos Extra (comodín)': {
+    icon: '🍑✨', color: 'var(--coral)',
+    ejercicios: [
+      // Bloque A — Glúteo máximo con carga
+      'Hip thrust con barra (tempo)','Peso muerto rumano unilateral con mancuernas',
+      // Bloque B — Glúteo medio e isquios
+      'Sentadilla búlgara (split squat) con mancuernas','Curl nórdico asistido / curl de isquios en máquina',
+      // Bloque C — Glúteo medio aislado
+      'Abducción en máquina (drop set)','Patada de glúteo en polea baja (tempo lento)',
+      'Sentadilla sumo con isométrico final',
+      // Core funcional
+      'Dead bug','Bird dog',
+    ]
+  },
+};
+
+// Normaliza el nombre de un ejercicio para agrupar variantes
+function normalizarNombre(raw) {
+  return raw
+    .replace(/\s*\([A-Z]\d+\)/g, '')   // quita (A1), (B2), etc.
+    .replace(/\s*⚠️.*$/g, '')           // quita advertencias
+    .replace(/\s*EN PAUSA.*/gi, '')
+    .replace(/\s*NO COMPLETADO.*/gi, '')
+    .trim();
+}
+
+// Busca el ejercicio canónico más cercano para un nombre dado
+function matchEjercicioCanónico(nombre, listaCanónica) {
+  const n = normalizarNombre(nombre).toLowerCase();
+  // Match exacto
+  const exacto = listaCanónica.find(c => c.toLowerCase() === n);
+  if (exacto) return exacto;
+  // Match parcial (≥2 palabras en común)
+  for (const c of listaCanónica) {
+    const palabrasC = c.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+    const palabrasN = n.split(/\s+/).filter(w => w.length > 3);
+    const comunes = palabrasC.filter(w => palabrasN.includes(w));
+    if (comunes.length >= 2) return c;
+  }
+  return null;
+}
+
+let progFiltroActual = 'Todos';
+
+function renderProgresion() {
+  // Construir mapa: rutina → ejercicio_canónico → [{fecha, peso, pesoKg, detalle, pausa, incompleto}]
+  const historial = {}; // { 'Glúteos': { 'Hip thrust con barra': [...] } }
+  Object.keys(RUTINAS_PLAN).forEach(r => { historial[r] = {}; });
+
+  ENTRENO_DAYS.forEach(fecha => {
+    const sesion = DATA.entreno[fecha];
+    const rutina = sesion.tipo; // 'Glúteos', 'Piernas', etc.
+    if (!historial[rutina]) return;
+    const listaCanónica = RUTINAS_PLAN[rutina]?.ejercicios || [];
+
+    sesion.ejercicios.forEach(ex => {
+      const canon = matchEjercicioCanónico(ex.name, listaCanónica);
+      if (!canon) return; // calentamientos genéricos, etc.
+      if (!historial[rutina][canon]) historial[rutina][canon] = [];
+      historial[rutina][canon].push({
+        fecha, peso: ex.peso, pesoKg: ex.pesoKg ?? null,
+        detalle: ex.detalle, pausa: ex.pausa || false, incompleto: ex.incompleto || false
+      });
     });
   });
-  const progHTML=Object.entries(progMap).map(([name,entries])=>`
-    <div class="prog-card">
-      <div class="prog-name">${name}</div>
-      ${entries.map((e,i)=>{
-        const trend=i>0?(e.peso!==entries[i-1].peso?'📈':'➡️'):'';
-        return`<div class="prog-row"><span class="prog-date">${dateLabel(e.fecha).split(' ')[0]}</span><span class="prog-peso">${e.peso}</span><span class="prog-trend">${trend}</span></div>`;
-      }).join('')}
-    </div>`).join('');
-  document.getElementById('progresion-pesos').innerHTML=progHTML?`<div class="section-label">Progresión de ejercicios clave</div>${progHTML}`:'';
 
-  // Músculos trabajados
-  const musMap={Glúteos:'🍑',Piernas:'🦵',Hombros:'🏋️',Brazos:'💪',Espalda:'🔙',Core:'⬡'};
-  const muscTrabajados=new Set(ENTRENO_DAYS.map(d=>DATA.entreno[d]?.tipo).filter(Boolean));
-  const allMusc=Object.keys(musMap);
-  document.getElementById('musculos-semana').innerHTML=`<div class="muscle-grid">${allMusc.map(m=>`<span class="muscle-pill ${muscTrabajados.has(m)?'done':''}">${musMap[m]} ${m}</span>`).join('')}</div><div style="font-size:11px;color:var(--text3);margin-top:6px">Verde = trabajado esta semana</div>`;
+  // Filtros
+  const rutinas = Object.keys(RUTINAS_PLAN);
+  const filtros = ['Todos', ...rutinas];
+  document.getElementById('prog-filter').innerHTML = filtros.map(f =>
+    `<button class="prog-filter-btn ${f === progFiltroActual ? 'active' : ''}" onclick="setProgFiltro('${f}')">${f === 'Todos' ? '📋 Todos' : RUTINAS_PLAN[f].icon + ' ' + f}</button>`
+  ).join('');
 
-  // Tabla macros
-  const macroKeys=[{key:'kcal',lbl:'Kcal',unit:''},{key:'prot',lbl:'Prot',unit:'g'},{key:'carbs',lbl:'Carbos',unit:'g'},{key:'fat',lbl:'Grasas',unit:'g'}];
-  const th='<tr><th class="w-lbl">Macro</th>'+DAYS_ORDER.map(d=>`<th>${dateLabel(d).split(' ')[0]}</th>`).join('')+'</tr>';
-  const rows=macroKeys.map(m=>{const cells=DAYS_ORDER.map(d=>{const dd=DATA.nutricion[d];if(!dd)return'<td><span class="w-dot w-empty">—</span></td>';const val=dd.totals[m.key],goal=goalFor(dd.tipo,m.key),p=val/goal,cls=p>1.1?'w-over':p>0.88?'w-ok':'w-low';return`<td><span class="w-dot ${cls}">${val}${m.unit}</span></td>`;}).join('');return`<tr><td class="w-lbl">${m.lbl}</td>${cells}</tr>`;}).join('');
-  document.getElementById('weekly-table').innerHTML=th+rows;
+  // Render
+  const rutinasMostrar = progFiltroActual === 'Todos' ? rutinas : [progFiltroActual];
+  let html = '';
 
-  // Entreno
-  document.getElementById('weekly-entreno').innerHTML=Object.entries(DATA.entreno).map(([d,e])=>`<div class="summary-row"><span>${dateLabel(d)}</span><span style="font-weight:600">${e.tipo}</span><span class="feeling-badge ${e.feeling==='great'?'feeling-great':e.feeling==='ok'?'feeling-ok':'feeling-hard'}" style="margin:0;padding:2px 8px;font-size:10px">${e.feeling==='great'?'✅ Muy bien':'⚠️ Regular'}</span></div>`).join('')||'<div class="empty">Sin datos</div>';
+  rutinasMostrar.forEach(rutina => {
+    const plan = RUTINAS_PLAN[rutina];
+    const ejsConDatos = Object.keys(historial[rutina] || {});
+    const totalSesiones = ENTRENO_DAYS.filter(d => DATA.entreno[d]?.tipo === rutina).length;
 
-  // Bienestar
-  document.getElementById('weekly-bienestar').innerHTML=Object.entries(DATA.bienestar).map(([d,b])=>`<div class="summary-row"><span>${dateLabel(d)}</span><span style="font-size:12px">⚡${b.energia} 😴${b.sueno} 😊${b.animo}</span><span class="pill ${b.levotiroxina?'pill-ok':'pill-no'}" style="font-size:10px">${b.levotiroxina?'💊 ✓':'💊 ✗'}</span></div>`).join('')||'<div class="empty">Sin datos</div>';
+    html += `<div class="prog-rutina-header">
+      <span class="prog-rutina-icon">${plan.icon}</span>
+      <span class="prog-rutina-title">${rutina}</span>
+      <span class="prog-rutina-count">${totalSesiones} sesión${totalSesiones !== 1 ? 'es' : ''} registrada${totalSesiones !== 1 ? 's' : ''}</span>
+    </div>`;
 
-  // Tránsito
-  const diasFue=DATA.transito.filter(t=>t.hora).length;
-  document.getElementById('weekly-transito').innerHTML=`<div class="summary-row"><span style="font-weight:600">Días con tránsito</span><span style="font-weight:600;color:${diasFue>=DAYS_ORDER.length*0.7?'var(--teal)':'var(--coral)'}">${diasFue} / ${DAYS_ORDER.length}</span></div>${DATA.transito.map(t=>`<div class="summary-row"><span>${dateLabel(t.fecha)}</span><span style="color:${t.hora?'var(--teal)':'var(--coral)'};font-weight:600">${t.hora||'No fue'}</span>${t.nota?`<span style="color:var(--text3);font-size:11px">${t.nota}</span>`:''}</div>`).join('')}`;
+    // Todos los ejercicios del plan para esta rutina
+    plan.ejercicios.forEach(ejCanon => {
+      const registros = (historial[rutina][ejCanon] || []).sort((a,b) => a.fecha.localeCompare(b.fecha));
+      const hayDatos = registros.length > 0;
+      const esPausa = registros.some(r => r.pausa);
+
+      html += `<div class="prog2-card">
+        <div class="prog2-name">
+          ${ejCanon}
+          ${esPausa ? '<span class="prog2-pausa">EN PAUSA</span>' : ''}
+        </div>`;
+
+      if (!hayDatos) {
+        html += `<div class="prog2-nodata">Sin registros aún</div>`;
+      } else {
+        // Chips de sesión
+        html += `<div class="prog2-sesiones">`;
+        registros.forEach((r, i) => {
+          const esUltimo = i === registros.length - 1;
+          const anterior = i > 0 ? registros[i-1] : null;
+          const subio = anterior && r.pesoKg !== null && anterior.pesoKg !== null && r.pesoKg > anterior.pesoKg;
+          let chipClass = esUltimo ? 'latest' : '';
+          if (subio) chipClass = 'up';
+
+          const fechaCorta = dateLabel(r.fecha).replace(' ', '\n');
+          const pesoDisplay = r.incompleto ? `⚠️ ${r.peso === '—' ? 'n/c' : r.peso}` : (r.peso === '—' || r.peso === 'sin peso' ? 'sin carga' : r.peso);
+
+          html += `<div class="prog2-chip ${chipClass}" title="${r.detalle}">
+            <span class="prog2-chip-fecha">${dateLabel(r.fecha).split(' ')[0]}<br>${dateLabel(r.fecha).split(' ')[1]}</span>
+            <span class="prog2-chip-peso">${pesoDisplay}</span>
+            <span class="prog2-chip-reps">${r.detalle.split('—')[0].trim().substring(0,12)}</span>
+          </div>`;
+        });
+        html += `</div>`;
+
+        // Mini gráfico de línea SVG si hay ≥2 datos numéricos
+        const conPeso = registros.filter(r => r.pesoKg !== null && r.pesoKg > 0);
+        if (conPeso.length >= 2) {
+          const minK = Math.min(...conPeso.map(r => r.pesoKg));
+          const maxK = Math.max(...conPeso.map(r => r.pesoKg));
+          const W = 260, H = 40, padX = 10, padY = 6;
+          const xOf = (i) => padX + (i / (conPeso.length - 1)) * (W - 2 * padX);
+          const yOf = (v) => {
+            if (maxK === minK) return H / 2;
+            return (H - padY) - ((v - minK) / (maxK - minK)) * (H - 2 * padY);
+          };
+          const pts = conPeso.map((r, i) => `${xOf(i)},${yOf(r.pesoKg)}`).join(' ');
+          const ultimo = conPeso[conPeso.length - 1];
+          const penultimo = conPeso[conPeso.length - 2];
+          const lineColor = ultimo.pesoKg > penultimo.pesoKg ? 'var(--teal)' : ultimo.pesoKg < penultimo.pesoKg ? 'var(--coral)' : 'var(--text3)';
+
+          html += `<div class="prog2-svg-wrap">
+            <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:44px;overflow:visible">
+              <polyline points="${pts}" fill="none" stroke="${lineColor}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+              ${conPeso.map((r, i) => `<circle cx="${xOf(i)}" cy="${yOf(r.pesoKg)}" r="3" fill="${lineColor}"/>
+                <text x="${xOf(i)}" y="${yOf(r.pesoKg) - 6}" text-anchor="middle" font-size="8" fill="var(--text3)">${r.pesoKg}kg</text>`).join('')}
+            </svg>
+          </div>`;
+
+          // Indicador de tendencia
+          const diff = ultimo.pesoKg - penultimo.pesoKg;
+          const trendIcon = diff > 0 ? '📈' : diff < 0 ? '📉' : '➡️';
+          const trendText = diff > 0 ? `+${diff} kg desde la sesión anterior` : diff < 0 ? `${diff} kg desde la sesión anterior` : 'Mismo peso que la sesión anterior';
+          html += `<div class="prog2-trend"><span class="prog2-trend-arrow">${trendIcon}</span><span>${trendText}</span></div>`;
+        } else if (registros.length === 1) {
+          html += `<div class="prog2-trend" style="color:var(--text3)">⏳ Primera sesión registrada — el gráfico aparecerá con la próxima</div>`;
+        }
+      }
+
+      html += `</div>`; // cierra prog2-card
+    });
+
+    // Ejercicios registrados que no matchearon con el plan (extras de esa sesión)
+    const ejsExtra = ejsConDatos.filter(e => !plan.ejercicios.includes(e));
+    if (ejsExtra.length > 0) {
+      ejsExtra.forEach(ejCanon => {
+        const registros = historial[rutina][ejCanon].sort((a,b) => a.fecha.localeCompare(b.fecha));
+        html += `<div class="prog2-card" style="border-style:dashed">
+          <div class="prog2-name" style="color:var(--text2)">${ejCanon} <span style="font-size:10px;color:var(--text3);font-weight:400">· fuera del plan base</span></div>
+          <div class="prog2-sesiones">
+            ${registros.map((r,i) => {
+              const esUltimo = i === registros.length - 1;
+              return `<div class="prog2-chip ${esUltimo ? 'latest' : ''}" title="${r.detalle}">
+                <span class="prog2-chip-fecha">${dateLabel(r.fecha).split(' ')[0]}<br>${dateLabel(r.fecha).split(' ')[1]}</span>
+                <span class="prog2-chip-peso">${r.peso === '—' ? 'sin carga' : r.peso}</span>
+                <span class="prog2-chip-reps">${r.detalle.split('—')[0].trim().substring(0,12)}</span>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+      });
+    }
+  });
+
+  document.getElementById('progresion-content').innerHTML = html || '<div class="empty">Sin sesiones registradas todavía</div>';
+}
+
+function setProgFiltro(rutina) {
+  progFiltroActual = rutina;
+  renderProgresion();
 }
 
 function changeDay(d){const n=idxN+d;if(n>=0&&n<DAYS_ORDER.length){idxN=n;renderNutricion();}}
 function changeDayE(d){const n=idxE+d;if(n>=0&&n<ENTRENO_DAYS.length){idxE=n;renderEntreno();}}
 function changeDayB(d){const n=idxB+d;if(n>=0&&n<BIENESTAR_DAYS.length){idxB=n;renderBienestar();}}
-function switchTab(id,el){document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.getElementById('panel-'+id).classList.add('active');if(id==='semana')renderSemana();}
+function switchTab(id,el){document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.getElementById('panel-'+id).classList.add('active');if(id==='semana')renderSemana();if(id==='progresion')renderProgresion();}
 
-renderNutricion();renderEntreno();renderBienestar();renderTransito();
+renderNutricion();renderEntreno();renderBienestar();
 </script>
 </body>
 </html>
