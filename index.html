@@ -414,6 +414,17 @@ const DATA = {
         { time: 'Cena', name: '1 porción tarta atún/acelga/ricota + 120g remolacha + 80g zanahoria + 72g cherrys + 1 mandarina', kcal: 375, prot: 31, carbs: 39, fat: 10 },
       ]
     },
+    '2026-07-05': {
+      tipo: 'gym',
+      totals: { kcal: 1583, prot: 116, carbs: 118, fat: 50 },
+      meals: [
+        { time: 'Post-entreno', name: '1 medida proteína (30g) + 1 banana mediana (120g)', kcal: 223, prot: 23, carbs: 29, fat: 3 },
+        { time: 'Almuerzo', name: 'Pastas rellenas de lomo al malbec, parmesano y hongos con salsa de emulsión y manteca', kcal: 739, prot: 49, carbs: 47, fat: 40 },
+        { time: 'Extra', name: '10g queso La Serenísima Proteína + 350g vino tinto', kcal: 264, prot: 3, carbs: 8, fat: 1 },
+        { time: 'Merienda', name: '1 naranja mediana (150g)', kcal: 70, prot: 1, carbs: 17, fat: 0 },
+        { time: 'Cena', name: '120g atún al natural + 50g ricota Tregar Light + 100g tomates cherry + 40g lechuga + 100g zanahoria + ½ cda mostaza', kcal: 287, prot: 40, carbs: 17, fat: 6 },
+      ]
+    },
     '2026-07-04': {
       tipo: 'gym',
       totals: { kcal: 1556, prot: 162, carbs: 139, fat: 34 },
@@ -436,6 +447,24 @@ const DATA = {
     },
   },
   entreno: {
+    '2026-07-05': {
+      tipo: 'Hombros', duracion: '~1h20 min', feeling: 'great', feelingText: 'Lo dio todo. Bueno y desafiante. Press militar probó 7.5 kg (casi al fallo). Elevación lateral a 4 kg al fallo en 12. E1 y H1 en pausa.',
+      ejercicios: [
+        { name: 'Calentamiento manguito rotador', detalle: 'OK — banda elástica', peso: '—', pesoKg: null, prev: null },
+        { name: 'Press militar con mancuernas sentada', detalle: '2 series x 5 kg + 2 series x 7.5 kg (casi al fallo en las de 7.5 — probando progresión)', peso: '5–7.5 kg', pesoKg: 7.5, prev: '5 kg' },
+        { name: 'Plancha con toque de hombro', detalle: '4 x 12 c/l — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Elevación frontal con mancuernas', detalle: '3 x 12', peso: '4 kg', pesoKg: 4, prev: '3 kg' },
+        { name: 'Bird dog', detalle: '3 x 10 c/l — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Elevación lateral con mancuernas', detalle: '3 x 12 al fallo (objetivo 15 — quedan reps en el tanque cuando se pueda)', peso: '4 kg', pesoKg: 4, prev: '3 kg' },
+        { name: 'Ab wheel / roll-out', detalle: '4 x 10 — OK. Nota: sensación de costillas saliendo → activar core antes de rodar', peso: '—', pesoKg: null, prev: null },
+        { name: 'Remo al mentón con barra', detalle: '3 x 12', peso: 'barra Z + 2.5 kg', pesoKg: 2.5, prev: 'barra + 2.5 kg' },
+        { name: 'Plancha frontal con elevación de pierna', detalle: '3 x 8 c/l — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Reverse fly inclinada ⚠️ EN PAUSA', detalle: 'No realizado', peso: '—', pesoKg: null, prev: null, incompleto: true },
+        { name: 'Face pull en polea con cuerda', detalle: '3 x 15', peso: '20 kg', pesoKg: 20, prev: '17 kg' },
+        { name: 'Pájaros en peck deck invertida', detalle: '3 x 15 — llegó al fallo en 15. Máquina arranca cerrada, fuerza al abrir: correcto.', peso: '11 kg', pesoKg: 11, prev: '11–17 kg' },
+        { name: 'Shrugs ⚠️ EN PAUSA', detalle: 'No realizado', peso: '—', pesoKg: null, prev: null, incompleto: true },
+      ]
+    },
     '2026-07-04': {
       tipo: 'Piernas', duracion: '~1h20 min', feeling: 'great', feelingText: 'Sesión desafiante y bien completada. Sin HIIT opcional. Estocadas con mancuernas listas para subir peso.',
       ejercicios: [
@@ -545,6 +574,7 @@ const DATA = {
     '2026-07-02': { energia: 4, sueno: 4, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '06:00', nota: 'Fue a CABA, almuerzo afuera (Sottovoce). Hinchazón fuerte repentina a las 16.50 post-merienda (yogur del fondo + papaya) — panza dura y dolor, bajó a las 17.30 post-caminata. Mila con control post-cirugía, todo bien.' },
     '2026-07-03': { energia: 5, sueno: 3, animo: 4, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '08:00', nota: 'Día contento y animado. Le costó dormir, se despertó a medianoche y se quedó dormida a la mañana. Hubiera querido hacer la rutina AM pero remontó bien el día.' },
     '2026-07-04': { energia: 4, sueno: 3, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '08:00', nota: '' },
+    '2026-07-05': { energia: 5, sueno: 4, animo: 5, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '07:30', nota: '' },
   },
   transito: [
     { fecha: '2026-06-25', hora: null, nota: 'No fue en todo el día' },
@@ -556,6 +586,8 @@ const DATA = {
     { fecha: '2026-07-01', hora: '09:30', nota: '' },
     { fecha: '2026-07-02', hora: '16:30', nota: '' },
     { fecha: '2026-07-03', hora: '10:30', nota: '' },
+    { fecha: '2026-07-04', hora: null, nota: '' },
+    { fecha: '2026-07-05', hora: '11:30 y 20:45', nota: 'Dos veces' },
   ]
 };
 
