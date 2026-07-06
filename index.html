@@ -414,6 +414,16 @@ const DATA = {
         { time: 'Cena', name: '1 porción tarta atún/acelga/ricota + 120g remolacha + 80g zanahoria + 72g cherrys + 1 mandarina', kcal: 375, prot: 31, carbs: 39, fat: 10 },
       ]
     },
+    '2026-07-06': {
+      tipo: 'gym',
+      totals: { kcal: 1511, prot: 131, carbs: 157, fat: 42 },
+      meals: [
+        { time: 'Desayuno', name: '160g yogur griego casero (leche La Serenísima proteína + yogur La Choza + leche en polvo) + 40g avena + 9g mantequilla de maní + 135g banana', kcal: 458, prot: 23, carbs: 72, fat: 9 },
+        { time: 'Almuerzo', name: '160g lomo cocido + 50g relleno sobrante + 62g verduras cocción lomo (zanahoria/cebolla) + 15g lechuga + 62g cherrys + 20g portobellos + 100g batata al horno + 30g cebolla al horno + 60g calabaza al horno', kcal: 563, prot: 59, carbs: 37, fat: 20 },
+        { time: 'Merienda', name: '1 scoop whey (30g) + 150g banana', kcal: 249, prot: 24, carbs: 36, fat: 3 },
+        { time: 'Cena', name: '3 claras + 1 huevo + 30g queso untable Tregar Light + 152g zucchini + 50g portobellos + 1g ghee + 42g calabaza al horno + 20g zanahoria al horno', kcal: 241, prot: 25, carbs: 12, fat: 11 },
+      ]
+    },
     '2026-07-05': {
       tipo: 'gym',
       totals: { kcal: 1583, prot: 116, carbs: 118, fat: 50 },
@@ -447,6 +457,22 @@ const DATA = {
     },
   },
   entreno: {
+    '2026-07-06': {
+      tipo: 'Glúteos', duracion: '1h40 min', feeling: 'great', feelingText: 'Desafiante. Hip thrust casi al fallo. Goblet listo para subir. Superman no completado por fatiga acumulada.',
+      ejercicios: [
+        { name: 'Hip thrust con barra', detalle: '4 x 15 — casi al fallo', peso: '9 kg + 55 kg (64 kg total)', pesoKg: 64, prev: '61.5 kg' },
+        { name: 'Plancha frontal', detalle: 'OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Sentadilla goblet con kettlebell', detalle: '4 x 12 — subir la próxima', peso: '12 kg', pesoKg: 12, prev: '12 kg' },
+        { name: 'Dead bug', detalle: 'OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Peso muerto rumano con mancuernas', detalle: '3 x 12', peso: '2 x 12 kg', pesoKg: 12, prev: '2 x 10 kg' },
+        { name: 'Bicicleta (bicycle crunch)', detalle: 'OK — subir a 30 reps', peso: '—', pesoKg: null, prev: null },
+        { name: 'Patada de glúteo en polea baja', detalle: '3 x 15 c/l — llegó justo, mantener', peso: '15 kg', pesoKg: 15, prev: '15 kg' },
+        { name: 'Elevación de piernas acostada', detalle: 'OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Abducción en máquina', detalle: '3 x 20', peso: '23 kg', pesoKg: 23, prev: '17 kg' },
+        { name: 'Puente de glúteo unilateral', detalle: 'OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Superman / extensión de espalda ⚠️', detalle: 'No completado — fatiga acumulada al final', peso: '—', pesoKg: null, prev: null, incompleto: true },
+      ]
+    },
     '2026-07-05': {
       tipo: 'Hombros', duracion: '~1h20 min', feeling: 'great', feelingText: 'Lo dio todo. Bueno y desafiante. Press militar probó 7.5 kg (casi al fallo). Elevación lateral a 4 kg al fallo en 12. E1 y H1 en pausa.',
       ejercicios: [
@@ -574,6 +600,7 @@ const DATA = {
     '2026-07-02': { energia: 4, sueno: 4, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '06:00', nota: 'Fue a CABA, almuerzo afuera (Sottovoce). Hinchazón fuerte repentina a las 16.50 post-merienda (yogur del fondo + papaya) — panza dura y dolor, bajó a las 17.30 post-caminata. Mila con control post-cirugía, todo bien.' },
     '2026-07-03': { energia: 5, sueno: 3, animo: 4, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '08:00', nota: 'Día contento y animado. Le costó dormir, se despertó a medianoche y se quedó dormida a la mañana. Hubiera querido hacer la rutina AM pero remontó bien el día.' },
     '2026-07-04': { energia: 4, sueno: 3, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '08:00', nota: '' },
+    '2026-07-06': { energia: 4, sueno: 4, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '07:30', nota: '' },
     '2026-07-05': { energia: 5, sueno: 4, animo: 5, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '07:30', nota: '' },
   },
   transito: [
@@ -587,6 +614,7 @@ const DATA = {
     { fecha: '2026-07-02', hora: '16:30', nota: '' },
     { fecha: '2026-07-03', hora: '10:30', nota: '' },
     { fecha: '2026-07-04', hora: null, nota: '' },
+    { fecha: '2026-07-06', hora: '10:30', nota: '' },
     { fecha: '2026-07-05', hora: '11:30 y 20:45', nota: 'Dos veces' },
   ]
 };
