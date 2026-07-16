@@ -205,6 +205,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div id="score-day"></div>
   <div class="macro-grid" id="macro-grid"></div>
   <div class="bars-card" id="bars"></div>
+  <div id="donut-macros"></div>
   <div id="insights-nutricion"></div>
   <div class="section-label">Comidas del día</div>
   <div id="meals-list"></div>
@@ -263,6 +264,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div class="section-label">Macros vs objetivo</div>
   <div class="card" style="overflow-x:auto"><table class="weekly-table" id="weekly-table"></table></div>
 
+  <div class="section-label">Esta semana vs semana anterior</div>
+  <div id="semana-vs-anterior"></div>
+
   <div class="section-label">Músculos trabajados</div>
   <div class="card" id="musculos-semana"></div>
 
@@ -281,6 +285,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 <!-- PROGRESIÓN -->
 <div class="panel" id="panel-progresion">
   <div class="prog-filter" id="prog-filter"></div>
+  <div class="section-label">Volumen semanal por grupo muscular</div>
+  <div id="volumen-semanal"></div>
   <div id="progresion-content"></div>
 </div>
 
@@ -414,6 +420,80 @@ const DATA = {
         { time: 'Cena', name: '1 porción tarta atún/acelga/ricota + 120g remolacha + 80g zanahoria + 72g cherrys + 1 mandarina', kcal: 375, prot: 31, carbs: 39, fat: 10 },
       ]
     },
+    '2026-07-15': {
+      tipo: 'gym',
+      totals: { kcal: 1655, prot: 139, carbs: 163, fat: 52 },
+      meals: [
+        { time: 'Desayuno', name: '2 huevos + 1 clara revueltos + 65g cherrys + 45g palta + 1g ghee + 49g pan sin gluten', kcal: 402, prot: 20, carbs: 30, fat: 22 },
+        { time: 'Almuerzo', name: '165g pechuga + 75ml leche de coco + 50g cebolla + 1.5g ghee + especias/caldo (curry) + 220g papines cocidos', kcal: 540, prot: 44, carbs: 46, fat: 19 },
+        { time: 'Merienda', name: '140g yogur griego casero + 90g banana + 50g frutos rojos + 1 scoop proteína GL (30g) + 7g miel', kcal: 378, prot: 38, carbs: 49, fat: 4 },
+        { time: 'Cena', name: '120g atún al natural + 80g arroz jazmín cocido + 40g verdes + 100g cherrys + 60g zanahoria + 47g apio + 13g parmesano', kcal: 335, prot: 37, carbs: 35, fat: 5 },
+      ]
+    },
+    '2026-07-14': {
+      tipo: 'yoga',
+      totals: { kcal: 1695, prot: 122, carbs: 174, fat: 44 },
+      meals: [
+        { time: 'Desayuno', name: '150g yogur griego casero + 15g avena s/gluten + 100g banana + 1 huevo + 1 clara revueltos + 30g pan sarraceno s/gluten', kcal: 449, prot: 31, carbs: 63, fat: 9 },
+        { time: 'Almuerzo', name: '120g pechuga cruda grillada + 70g quinoa cocida + 160g brócoli crudo + 67g verdes + 100g cherrys + 96g papines cocidos + 50g apio + 1 diente ajo asado + 5g aceite de oliva + 10g mostaza', kcal: 452, prot: 42, carbs: 51, fat: 10 },
+        { time: 'Merienda', name: '1 pancake Granger (50g) + 35g yogur griego casero + 3g mantequilla de maní BeePure + 50g frutos rojos + 8g frutos secos', kcal: 304, prot: 22, carbs: 34, fat: 9 },
+        { time: 'Cena', name: '2 huevos + 1 clara revueltos + 51g espinaca + 28g ricota Tregar light + 80g cherrys + 96g papines cocidos + 4g ghee', kcal: 340, prot: 27, carbs: 22, fat: 16 },
+        { time: 'Extra', name: '1.25 copas vino tinto (~150ml)', kcal: 150, prot: 0, carbs: 5, fat: 0 },
+      ]
+    },
+    '2026-07-13': {
+      tipo: 'gym',
+      totals: { kcal: 1678, prot: 150, carbs: 176, fat: 43 },
+      meals: [
+        { time: 'Desayuno', name: '227g yogur griego casero + 3g mantequilla de maní BeePure + 20g avena s/gluten + 66g banana', kcal: 321, prot: 25, carbs: 48, fat: 7 },
+        { time: 'Almuerzo', name: '170g pechuga cruda grillada + 130g quinoa cocida + 200g brócoli crudo salteado con ajo + 67g batata hervida + 3g ghee + 2.5g aceite de oliva', kcal: 513, prot: 52, carbs: 52, fat: 10 },
+        { time: 'Merienda', name: '1 scoop whey GL (30g) + 56g manzana verde + 75g banana', kcal: 216, prot: 23, carbs: 27, fat: 3 },
+        { time: 'Extra', name: '25g mix frutos secos (almendras, castañas, nueces)', kcal: 150, prot: 4, carbs: 3, fat: 13 },
+        { time: 'Cena', name: '220g filet brotola cruda al horno + 100g brócoli cocido + 40g papines cocidos + verdes + 6 cherrys amarillos asados', kcal: 266, prot: 43, carbs: 17, fat: 2 },
+        { time: 'Postre', name: '~40g frutillas + ~5g dátil (1/2) + ~15g yogur griego Kay + 60g helado Shock Tramontana', kcal: 212, prot: 3, carbs: 29, fat: 9 },
+      ]
+    },
+    '2026-07-12': {
+      tipo: 'gym',
+      totals: { kcal: 1965, prot: 106, carbs: 201, fat: 65 },
+      meals: [
+        { time: 'Pre-entreno', name: '125g banana', kcal: 111, prot: 1, carbs: 29, fat: 0 },
+        { time: 'Post-entreno', name: '1 scoop whey GL (30g)', kcal: 116, prot: 22, carbs: 2, fat: 2 },
+        { time: 'Almuerzo', name: '270g pasta cocida + 140g langostinos + 24g manteca + 6g ghee bisque + 5g ghee salteo + 24ml vino blanco + 3g pasta de tomate + 5g ajo confitado + 2 copas vino (~250ml) + 1.5 porción torta vasca (~180g)', kcal: 1500, prot: 47, carbs: 146, fat: 61 },
+        { time: 'Cena', name: '120g atún al natural + 40g espinaca + 100g tomates cherry + 90g batata cocida + 1 cdita mostaza', kcal: 238, prot: 36, carbs: 25, fat: 1 },
+      ]
+    },
+    '2026-07-11': {
+      tipo: 'gym',
+      totals: { kcal: 1909, prot: 142, carbs: 194, fat: 67 },
+      meals: [
+        { time: 'Desayuno', name: '150g yogur griego casero + 56g banana + 25g avena s/gluten + 61g frutos rojos + 15g mix castañas/nueces/almendras', kcal: 373, prot: 25, carbs: 47, fat: 13 },
+        { time: 'Almuerzo', name: '218g brótola al air fryer + 210g papines hervidos + 100g cherrys asados al air fryer + 100g acelga salteada con 1 diente de ajo + 1g ghee + 8g aceite de oliva', kcal: 461, prot: 45, carbs: 44, fat: 12 },
+        { time: 'Merienda', name: '1 scoop whey (30g) + 65g manzana verde', kcal: 150, prot: 22, carbs: 11, fat: 2 },
+        { time: 'Cena', name: '125g pollo cocido + 115g papines cocidos + 6g semillas de girasol + 1 cda mostaza + 100g cherrys + 50g zanahoria + 27g espinaca', kcal: 365, prot: 37, carbs: 32, fat: 9 },
+        { time: 'Extra', name: '¼ kg helado Shock Tramontana y Rocher', kcal: 560, prot: 8, carbs: 62, fat: 32 },
+      ]
+    },
+    '2026-07-10': {
+      tipo: 'gym',
+      totals: { kcal: 1526, prot: 113, carbs: 164, fat: 51 },
+      meals: [
+        { time: 'Desayuno', name: '2 huevos + 1 clara + 2g ghee + 25g pan sarraceno s/gluten + 20g palta + 20g queso untable Tregar Light + 57g cherrys', kcal: 307, prot: 22, carbs: 15, fat: 18 },
+        { time: 'Almuerzo', name: '220g brótola cocida al horno + 5g ghee + 200g papines al horno + 5g aceite de oliva + ensalada espinaca/cherrys/zanahoria sin aderezo (~150g)', kcal: 449, prot: 48, carbs: 41, fat: 13 },
+        { time: 'Merienda', name: '1 scoop whey (30g) + 130g yogur griego casero + 40g manzana roja + 73g banana', kcal: 297, prot: 35, carbs: 35, fat: 4 },
+        { time: 'Cena', name: '86g batata asada + 135g mix zanahoria/calabaza/cebolla asado + 50g fideos Wakas de chía secos + ensalada espinaca y cherrys (~100g) + 45g acelga cocida + 15g aceite de oliva', kcal: 473, prot: 8, carbs: 73, fat: 16 },
+      ]
+    },
+    '2026-07-09': {
+      tipo: 'descanso',
+      totals: { kcal: 1556, prot: 117, carbs: 152, fat: 47 },
+      meals: [
+        { time: 'Almuerzo', name: '2 milanesas de pollo caseras (173g, rebozado fino, air fryer) + 100g pechuga cruda grillada + 80g batata al horno + 50g calabaza al horno + 20g zanahoria + 20g cebolla + 40g espinaca + 90g cherrys + ½ cdita mostaza + limón + chorrito de aceto', kcal: 525, prot: 58, carbs: 40, fat: 11 },
+        { time: 'Snack', name: 'Queso cremón ~40g + dulce de batata ~40g (restaurant)', kcal: 220, prot: 8, carbs: 28, fat: 8 },
+        { time: 'Merienda', name: '130g yogur griego casero (leche La Serenísima Proteína) + 80g manzana roja', kcal: 127, prot: 9, carbs: 19, fat: 0 },
+        { time: 'Cena', name: '2 huevos + 2 claras + 30g queso cremoso Tregar Light + 60g ricota Tregar Light + 85g batata al horno + 68g arroz yamani cocido + 25g portobello + 93g acelga cocida + 2g ghee + 100g cherrys + 58g tiramisú', kcal: 684, prot: 42, carbs: 65, fat: 28 },
+      ]
+    },
     '2026-07-08': {
       tipo: 'gym',
       totals: { kcal: 2069, prot: 123, carbs: 199, fat: 72 },
@@ -478,6 +558,89 @@ const DATA = {
     },
   },
   entreno: {
+    '2026-07-15': {
+      tipo: 'Piernas', duracion: '~1h30 min', feeling: 'great', dobleActividad: 'Yoga', feelingText: 'Doble actividad (yoga mañana + piernas tarde). Energía baja en general. Rodilla izquierda monitoreada en prensa — sin modificar carga. B1 sentadilla sumo con pulsaciones altas: lista para subir peso y bajar reps la próxima.',
+      ejercicios: [
+        { name: 'Prensa de piernas', detalle: '4 x 12 — cuidando rodilla izquierda', peso: '50 kg', pesoKg: 50, prev: '50 kg' },
+        { name: 'Crunch clásico [ABS]', detalle: '4 x 20 — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Sentadilla sumo con mancuerna ⚡', detalle: '3 x 15 — pulsaciones muy altas. Lista para subir peso y bajar reps', peso: '10 kg', pesoKg: 10, prev: '10 kg' },
+        { name: 'Reverse crunch [ABS]', detalle: '3 x 15 — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Extensión de cuádriceps en máquina', detalle: '3 x 15', peso: '23 kg', pesoKg: 23, prev: '23 kg' },
+        { name: 'Toe touches', detalle: '3 x 15 — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Curl de isquiotibiales sentada en máquina', detalle: '3 x 12', peso: '23 kg', pesoKg: 23, prev: '23 kg' },
+        { name: 'Hollow hold [ABS]', detalle: '3 x 30 seg — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Estocadas con mancuernas (lunges)', detalle: '3 x 10 c/l — superserie con remo', peso: '6 kg c/mano', pesoKg: 6, prev: '6 kg' },
+        { name: 'Elevación de pantorrillas de pie', detalle: '4 x 20', peso: '6 kg c/mano', pesoKg: 6, prev: '6 kg' },
+        { name: 'Remo con mancuerna unilateral (bent over)', detalle: '3 x 12 c/l + 1 serie extra izquierda 6 kg. Superserie con E1', peso: '23 kg', pesoKg: 23, prev: '23 kg' },
+      ]
+    },
+    '2026-07-14': {
+      tipo: 'Descanso', duracion: '—', feeling: 'good', feelingText: 'Yoga no realizado — salida social a la noche. Día de yoga en calendario.',
+      ejercicios: []
+    },
+    '2026-07-13': {
+      tipo: 'Glúteos', duracion: '~1h30 min', feeling: 'great', feelingText: 'Muy buena sesión. A1 subió carga (9kg+60kg). C1 limitada por fricción en agarre — solución: guantes o straps. D1 sin rep extra izq por confusión asimetría (derecho es el débil). Próximo lunes: bajar reps y subir pesos en A1/B1/C1/D1.',
+      ejercicios: [
+        { name: 'Hip thrust con barra', detalle: '4 x 15', peso: '9 kg + 60 kg = 69 kg total', pesoKg: 69, prev: null },
+        { name: 'Plancha frontal [ABS]', detalle: '4 x 40 seg — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Sentadilla goblet con kettlebell', detalle: '4 x 12 — con mancuerna', peso: '15 kg', pesoKg: 15, prev: null },
+        { name: 'Dead bug', detalle: '4 x 10 c/l — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Peso muerto rumano con mancuernas ⚠️', detalle: '3 x 12 — subir a 15 kg, fricción en mano (usar guantes/straps)', peso: '12.5 kg c/u', pesoKg: 12.5, prev: null },
+        { name: 'Bicicleta', detalle: '3 x 30 reps — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Patada de glúteo en polea baja', detalle: '3 x 15 c/l — subir peso próxima vez / glúteo derecho más débil, rep extra va en derecho', peso: '15 kg', pesoKg: 15, prev: null },
+        { name: 'Elevación de piernas acostada [ABS]', detalle: '3 x 15 reps — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Abducción en máquina', detalle: '3 x 20', peso: '29 kg', pesoKg: 29, prev: null },
+        { name: 'Puente de glúteo unilateral', detalle: '3 x 12 c/l — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Superman', detalle: '2 series x 12', peso: '—', pesoKg: null, prev: null },
+      ]
+    },
+    '2026-07-12': {
+      tipo: 'Hombros', duracion: '~1h30 min', feeling: 'great', feelingText: 'Muy buena sesión. Primera sesión de hombros del ciclo. Mejora notable de técnica. Asimetría izq/der en elevación lateral — patrón recurrente. B1 y G1 listos para subir peso.',
+      ejercicios: [
+        { name: 'Press militar con mancuernas sentada', detalle: '4 x 10', peso: '7.5 kg', pesoKg: 7.5, prev: null },
+        { name: 'Plancha con toque de hombro [ABS]', detalle: '4 x 12 c/l', peso: '—', pesoKg: null, prev: null },
+        { name: 'Elevación frontal con mancuernas ⚡', detalle: '3 x 12 — puede más', peso: '4 kg', pesoKg: 4, prev: null },
+        { name: 'Bird dog', detalle: '3 x 10 c/l', peso: '—', pesoKg: null, prev: null },
+        { name: 'Elevación lateral con mancuernas ⚠️', detalle: '4 x 15 — cerca del fallo, asimetría izq/der', peso: '4 kg', pesoKg: 4, prev: null },
+        { name: 'Ab wheel o roll-out [ABS]', detalle: '4 x 10', peso: '—', pesoKg: null, prev: null },
+        { name: 'Remo al mentón con barra', detalle: '3 x 12', peso: 'Barra + 2.5 kg', pesoKg: null, prev: null },
+        { name: 'Plancha abdominal con pierna elevada [ABS]', detalle: '3 x 8 c/l', peso: '—', pesoKg: null, prev: null },
+        { name: 'Face pull en polea con cuerda', detalle: '3 x 15', peso: '20 kg', pesoKg: 20, prev: null },
+        { name: 'Pájaros en máquina peck deck invertida', detalle: '3 x 15', peso: '11 kg', pesoKg: 11, prev: null },
+        { name: 'Encogimiento de trapecios con mancuernas (shrugs) ⚡', detalle: '3 x 15 — subir peso próxima vez', peso: '4 kg', pesoKg: 4, prev: null },
+      ]
+    },
+    '2026-07-11': {
+      tipo: 'Glúteos Extra (comodín)', duracion: '1h50 min', feeling: 'great', feelingText: 'Muy buena sesión comodín completa. Mucha corrección de técnica. Terminó cansada con pulsaciones altas.',
+      ejercicios: [
+        { name: 'Hip thrust con barra (tempo)', detalle: '4 x 10 — tempo 2-2-1, más liviano que lunes', peso: '9 kg barra + 40 kg = 49 kg total', pesoKg: 49, prev: null },
+        { name: 'Peso muerto rumano unilateral con mancuernas ⚠️', detalle: '4 x 10 c/l — tira mucho el brazo izquierdo (asimetría)', peso: '12 kg', pesoKg: 12, prev: null },
+        { name: 'Sentadilla búlgara con mancuernas', detalle: '3 x 10 c/l', peso: '7.5 kg', pesoKg: 7.5, prev: null },
+        { name: 'Curl nórdico asistido / curl isquios en máquina', detalle: '3 x 10-12', peso: '23 kg', pesoKg: 23, prev: null },
+        { name: 'Abducción en máquina — drop set', detalle: '3 series al fallo', peso: '29 kg', pesoKg: 29, prev: null },
+        { name: 'Patada de glúteo en polea baja — tempo lento', detalle: '3 x 15 c/l', peso: '15 kg', pesoKg: 15, prev: null },
+        { name: 'Sentadilla sumo + isométrico final', detalle: '3 x 12 + 12 seg iso — con tarima', peso: '10 kg', pesoKg: 10, prev: null },
+        { name: 'Dead bug', detalle: '2 rounds — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Bird dog', detalle: '2 rounds — OK', peso: '—', pesoKg: null, prev: null },
+      ]
+    },
+    '2026-07-10': {
+      tipo: 'Brazos', duracion: '~1h30 min', feeling: 'great', feelingText: 'Muy buena sesión completa de brazos. Se nota menor fuerza del lado izquierdo. B1 y C2 listos para subir peso.',
+      ejercicios: [
+        { name: 'Curl con barra EZ', detalle: '4 x 12', peso: 'Barra sola', pesoKg: null, prev: null },
+        { name: 'Russian twist [ABS]', detalle: '4 x 20', peso: '5 kg', pesoKg: 5, prev: null },
+        { name: 'Curl con mancuernas alterno ⚡', detalle: '3 x 12 c/l — puede más', peso: '4 kg', pesoKg: 4, prev: '4 kg' },
+        { name: 'Plancha lateral con toque de cadera [ABS]', detalle: '3 x 12 c/l — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Curl martillo (hammer curl)', detalle: '3 x 12', peso: '4 kg', pesoKg: 4, prev: null },
+        { name: 'Woodchop en polea', detalle: '3 x 12 c/l — puede más', peso: '10 kg', pesoKg: 10, prev: null },
+        { name: 'Curl en polea baja (cable curl)', detalle: '3 x 15', peso: '10 kg', pesoKg: 10, prev: null },
+        { name: 'Crunch con giro', detalle: '3 x 15 — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Pullover con mancuerna', detalle: '3 x 12', peso: '5 kg', pesoKg: 5, prev: '5 kg' },
+        { name: 'Extensión de tríceps en polea alta con cuerda', detalle: '3 x 15 — 1 serie 10kg, 2 series 15kg', peso: '10–15 kg', pesoKg: 15, prev: null },
+        { name: 'Fondos en banco (dips)', detalle: '3 x fallo — 16/16/14 reps', peso: 'Peso corporal', pesoKg: null, prev: null },
+        { name: 'Kickback de tríceps con mancuerna', detalle: '3 x 12 c/l', peso: '4 kg', pesoKg: 4, prev: null },
+      ]
+    },
     '2026-07-08': {
       tipo: 'Piernas', duracion: '~1h30 min', feeling: 'great', feelingText: 'Desafiante. Subió casi todos los pesos con mucha energía. Leve molestia rodilla izquierda (medial, preexistente — correlaciona con humedad, no con lesión aguda).',
       ejercicios: [
@@ -502,7 +665,7 @@ const DATA = {
         { name: 'Sentadilla goblet con kettlebell', detalle: '4 x 12 — subir la próxima', peso: '12 kg', pesoKg: 12, prev: '12 kg' },
         { name: 'Dead bug', detalle: 'OK', peso: '—', pesoKg: null, prev: null },
         { name: 'Peso muerto rumano con mancuernas', detalle: '3 x 12', peso: '2 x 12 kg', pesoKg: 12, prev: '2 x 10 kg' },
-        { name: 'Bicicleta (bicycle crunch)', detalle: 'OK — subir a 30 reps', peso: '—', pesoKg: null, prev: null },
+        { name: 'Bicicleta', detalle: 'OK — subir a 30 reps', peso: '—', pesoKg: null, prev: null },
         { name: 'Patada de glúteo en polea baja', detalle: '3 x 15 c/l — llegó justo, mantener', peso: '15 kg', pesoKg: 15, prev: '15 kg' },
         { name: 'Elevación de piernas acostada', detalle: 'OK', peso: '—', pesoKg: null, prev: null },
         { name: 'Abducción en máquina', detalle: '3 x 20', peso: '23 kg', pesoKg: 23, prev: '17 kg' },
@@ -521,7 +684,7 @@ const DATA = {
         { name: 'Elevación lateral con mancuernas', detalle: '3 x 12 al fallo (objetivo 15 — quedan reps en el tanque cuando se pueda)', peso: '4 kg', pesoKg: 4, prev: '3 kg' },
         { name: 'Ab wheel / roll-out', detalle: '4 x 10 — OK. Nota: sensación de costillas saliendo → activar core antes de rodar', peso: '—', pesoKg: null, prev: null },
         { name: 'Remo al mentón con barra', detalle: '3 x 12', peso: 'barra Z + 2.5 kg', pesoKg: 2.5, prev: 'barra + 2.5 kg' },
-        { name: 'Plancha frontal con elevación de pierna', detalle: '3 x 8 c/l — OK', peso: '—', pesoKg: null, prev: null },
+        { name: 'Plancha abdominal con pierna elevada', detalle: '3 x 8 c/l — OK', peso: '—', pesoKg: null, prev: null },
         { name: 'Reverse fly inclinada ⚠️ EN PAUSA', detalle: 'No realizado', peso: '—', pesoKg: null, prev: null, incompleto: true },
         { name: 'Face pull en polea con cuerda', detalle: '3 x 15', peso: '20 kg', pesoKg: 20, prev: '17 kg' },
         { name: 'Pájaros en peck deck invertida', detalle: '3 x 15 — llegó al fallo en 15. Máquina arranca cerrada, fuerza al abrir: correcto.', peso: '11 kg', pesoKg: 11, prev: '11–17 kg' },
@@ -556,7 +719,7 @@ const DATA = {
         { name: 'Curl en polea baja', detalle: '3 x 15', peso: '10 kg', pesoKg: 10, prev: '10 kg' },
         { name: 'Bicicleta', detalle: '3 x 30 reps', peso: '—', pesoKg: null, prev: null },
         { name: 'Pullover con mancuerna', detalle: '3 x 12 — leve tensión hombro der., no limitante. Reactivado (7 kg anterior causaba dolor)', peso: '5 kg', pesoKg: 5, prev: '7 kg' },
-        { name: 'Fondos en banco — dips', detalle: '3 x 14 reps', peso: 'peso corporal', pesoKg: null, prev: null },
+        { name: 'Fondos en banco (dips)', detalle: '3 x 14 reps', peso: 'peso corporal', pesoKg: null, prev: null },
         { name: 'Extensión tríceps polea alta', detalle: '3 x 15', peso: '10 kg', pesoKg: 10, prev: '10 kg' },
         { name: 'Kickback de tríceps con mancuerna', detalle: '3 x 12 c/l', peso: '4 kg', pesoKg: 4, prev: 'primer registro' },
         { name: 'Press francés ⚠️ EN PAUSA', detalle: 'No realizado — en pausa por hombro derecho', peso: '—', pesoKg: null, prev: null, incompleto: true },
@@ -637,7 +800,14 @@ const DATA = {
     '2026-07-02': { energia: 4, sueno: 4, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '06:00', nota: 'Fue a CABA, almuerzo afuera (Sottovoce). Hinchazón fuerte repentina a las 16.50 post-merienda (yogur del fondo + papaya) — panza dura y dolor, bajó a las 17.30 post-caminata. Mila con control post-cirugía, todo bien.' },
     '2026-07-03': { energia: 5, sueno: 3, animo: 4, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '08:00', nota: 'Día contento y animado. Le costó dormir, se despertó a medianoche y se quedó dormida a la mañana. Hubiera querido hacer la rutina AM pero remontó bien el día.' },
     '2026-07-04': { energia: 4, sueno: 3, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '08:00', nota: '' },
-    '2026-07-08': { energia: 5, sueno: 4, animo: 5, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '07:00', nota: 'Día de gym con mucha energía. Subió casi todos los pesos en piernas. Salida social a hamburguesería. Leve molestia rodilla izquierda medial (preexistente, no aguda).' },
+    '2026-07-15': { energia: 3, sueno: 4, animo: 4, hinchazon: 1, rodilla: 'molestia', levotiroxina: true, levotiroxinaHora: '07:50', nota: 'Día atípico de doble actividad (yoga mañana + piernas tarde). Cansancio general durante el día.' },
+    '2026-07-14': { energia: 5, sueno: 4, animo: 4, hinchazon: 2, rodilla: 'molestia', levotiroxina: true, levotiroxinaHora: '08:00', nota: 'Salida social a la noche. 1.25 copas de vino.' },
+    '2026-07-13': { energia: 4, sueno: 4, animo: 4, hinchazon: 2, rodilla: 'molestia', levotiroxina: true, levotiroxinaHora: '08:00', nota: 'Dormió de más. Activa pero con mucha fiaca. Hinchazón leve, subió a 3 post-cena en lo de una amiga. Brotola al horno con verduras y papines. Postre liviano + 60g helado Tramontana. Buena sesión de glúteos.' },
+    '2026-07-12': { energia: 5, sueno: 3, animo: 5, hinchazon: 3, rodilla: 'molestia', levotiroxina: true, levotiroxinaHora: '07:30', nota: 'Sueño interrumpido por amiga que se quedó a dormir. Energía y ánimo excelentes. Almuerzo festivo (pastas, vino, torta vasca) — hinchazón a la tarde post-almuerzo. Primera sesión hombros del ciclo — buena técnica.' },
+    '2026-07-11': { energia: 4, sueno: 4, animo: 3, hinchazon: 2, rodilla: 'molestia', levotiroxina: true, levotiroxinaHora: '08:30', nota: 'Dormió de más. Mal humor al principio, se fue pasando. Sesión comodín de glúteos de 1h50 — mucha corrección de técnica, pulsaciones altas al final. Helado por la tarde.' },
+    '2026-07-10': { energia: 4, sueno: 5, animo: 3, hinchazon: 2, rodilla: 'molestia', levotiroxina: true, levotiroxinaHora: '07:00', nota: 'Se sintió medio rara y enojada por momentos. Entrenamiento de brazos completo. Nota: menor fuerza notoria del lado izquierdo.' },
+    '2026-07-09': { energia: 5, sueno: 5, animo: 4, hinchazon: 2, rodilla: 'molestia', levotiroxina: true, levotiroxinaHora: '08:45', nota: 'Día feriado sin yoga. Sin desayuno. Buena energía y sueño excelente.' },
+    '2026-07-08': { energia: 5, sueno: 4, animo: 5, hinchazon: 1, rodilla: 'molestia', levotiroxina: true, levotiroxinaHora: '07:00', nota: 'Día de gym con mucha energía. Subió casi todos los pesos en piernas. Salida social a hamburguesería. Leve molestia rodilla izquierda medial (preexistente, no aguda).' },
     '2026-07-07': { energia: 5, sueno: 4, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '06:40', nota: 'Yoga excelente. Hinchazón repentina a las 21-21.30 estando en ayunas desde las 17.15 (merienda) y después mate hasta las 18. Posible trigger: yoga intenso + mate + estómago vacío + Hashimoto.' },
     '2026-07-06': { energia: 4, sueno: 4, animo: 4, hinchazon: 2, levotiroxina: true, levotiroxinaHora: '07:30', nota: '' },
     '2026-07-05': { energia: 5, sueno: 4, animo: 5, hinchazon: 1, levotiroxina: true, levotiroxinaHora: '07:30', nota: '' },
@@ -653,6 +823,13 @@ const DATA = {
     { fecha: '2026-07-02', hora: '16:30', nota: '' },
     { fecha: '2026-07-03', hora: '10:30', nota: '' },
     { fecha: '2026-07-04', hora: null, nota: '' },
+    { fecha: '2026-07-15', hora: '11:00', nota: '' },
+    { fecha: '2026-07-14', hora: '10:00', nota: '' },
+    { fecha: '2026-07-13', hora: '22:00', nota: '' },
+    { fecha: '2026-07-12', hora: '09:00', nota: '' },
+    { fecha: '2026-07-11', hora: '11:00', nota: '' },
+    { fecha: '2026-07-10', hora: '11:00', nota: '' },
+    { fecha: '2026-07-09', hora: '09:30', nota: '' },
     { fecha: '2026-07-08', hora: '11:00', nota: '' },
     { fecha: '2026-07-07', hora: '17:00', nota: '' },
     { fecha: '2026-07-06', hora: '10:30', nota: '' },
@@ -727,6 +904,7 @@ function renderNutricion(){
   const barLabels={kcal:'Calorías',prot:'Proteína',carbs:'Carbohidratos',fat:'Grasas'};
   const barColors=['bar-teal','bar-purple','bar-amber','bar-coral'];
   document.getElementById('bars').innerHTML=macros.map((m,i)=>{const goal=goalFor(data.tipo,m.key),p=pct(t[m.key],goal);return`<div class="bar-row"><div class="bar-meta"><span>${barLabels[m.key]}</span><span>${t[m.key]}${m.unit} / ${goal}${m.unit} (${p}%)</span></div><div class="bar-track"><div class="bar-fill ${barColors[i]}" style="width:${p}%"></div></div></div>`;}).join('');
+  renderDonut(t);
   document.getElementById('insights-nutricion').innerHTML=generateInsights(data).map(ins=>`<div class="insight-card insight-${ins.type}"><div class="insight-title">${ins.icon} ${ins.title}</div><div class="insight-body">${ins.body}</div></div>`).join('');
   document.getElementById('meals-list').innerHTML=data.meals.map(m=>`<div class="meal-card"><div class="meal-time">${m.time}</div><div class="meal-name">${m.name}</div>${m.kcal>0?`<div class="meal-macros"><span>${m.kcal} kcal</span><span>${m.prot}g prot</span><span>${m.carbs}g carbos</span><span>${m.fat}g grasas</span></div>`:''}</div>`).join('');
 }
@@ -755,6 +933,7 @@ function renderBienestar(){
   const hLabel=['','Ninguna','Leve','Moderada','Alta','Muy alta'];
   const hColor=['','pill-ok','pill-ok','pill-mid','pill-no','pill-no'];
   const transitHtml=`<div class="wb-card"><div class="wb-label">🚽 Tránsito</div>${transitData&&transitData.hora?`<span class="pill pill-ok">✓ ${transitData.hora}h</span>`:'<span class="pill pill-no">✗ No registrado</span>'}</div>`;
+  const rodillaHtml=`<div class="wb-card"><div class="wb-label">🦵 Rodilla izq.</div>${data.rodilla==='molestia'?'<span class="pill pill-no">⚠️ Molestia</span>':data.rodilla==='ok'?'<span class="pill pill-ok">✓ Sin molestia</span>':'<span class="pill" style="background:var(--surface2);color:var(--text3)">— No registrado</span>'}</div>`;
   document.getElementById('bienestar-content').innerHTML=`
     <div class="section-label">Estado general</div>
     <div class="wellbeing-grid">
@@ -763,6 +942,7 @@ function renderBienestar(){
       <div class="wb-card"><div class="wb-label">😊 Ánimo</div><div>${stars(data.animo)}</div></div>
       <div class="wb-card"><div class="wb-label">💧 Hinchazón</div><span class="pill ${hColor[data.hinchazon]}">${hLabel[data.hinchazon]}</span></div>
       ${transitHtml}
+      ${rodillaHtml}
     </div>
     <div class="section-label">Hashimoto · Levotiroxina 88mcg</div>
     <div class="hashi-card">
@@ -843,7 +1023,8 @@ function renderSemana(){
   document.getElementById('musculos-semana').innerHTML=`<div class="muscle-grid">${allMusc.map(m=>`<span class="muscle-pill ${muscTrabajados.has(m)?'done':''}">${musMap[m]} ${m}</span>`).join('')}</div><div style="font-size:11px;color:var(--text3);margin-top:6px">Verde = trabajado en el período</div>`;
 
   // Entrenamiento del período
-  const entrenosDias=dias.filter(d=>DATA.entreno[d]);
+  const gymTiposSet=new Set(['Glúteos','Piernas','Brazos','Hombros','Glúteos Extra (comodín)']);
+  const entrenosDias=dias.filter(d=>DATA.entreno[d]&&gymTiposSet.has(DATA.entreno[d].tipo));
   document.getElementById('weekly-entreno').innerHTML=entrenosDias.map(d=>{const e=DATA.entreno[d];return`<div class="summary-row"><span>${dateLabel(d)}</span><span style="font-weight:600">${e.tipo}</span><span class="feeling-badge ${e.feeling==='great'?'feeling-great':e.feeling==='ok'?'feeling-ok':'feeling-hard'}" style="margin:0;padding:2px 8px;font-size:10px">${e.feeling==='great'?'✅ Muy bien':'⚠️ Regular'}</span></div>`;}).join('')||'<div class="empty">Sin datos</div>';
 
   // Link progresión
@@ -882,6 +1063,7 @@ function renderSemana(){
     <span style="font-size:12px">⚡${promedios.energia||'—'} 😴${promedios.sueno||'—'} 😊${promedios.animo||'—'} 💧${promedios.hinchazon||'—'}</span>
   </div>`;
   document.getElementById('weekly-bienestar').innerHTML=promRow+bDias.map(d=>{const b=DATA.bienestar[d];return`<div class="summary-row"><span>${dateLabel(d)}</span><span style="font-size:12px">⚡${b.energia} 😴${b.sueno} 😊${b.animo} 💧${b.hinchazon}</span><span class="pill ${b.levotiroxina?'pill-ok':'pill-no'}" style="font-size:10px">${b.levotiroxina?'💊 ✓':'💊 ✗'}</span></div>`;}).join('')||'<div class="empty">Sin datos</div>';
+  renderSemanaVsAnterior();
 }
 
 
@@ -895,17 +1077,16 @@ const RUTINAS_PLAN = {
       'Hip thrust con barra','Sentadilla goblet con kettlebell',
       'Peso muerto rumano con mancuernas','Patada de glúteo en polea baja',
       'Abducción en máquina','Puente de glúteo unilateral','Superman',
-      'Hip circles + glúteo 4 apoyos con banda','Isométrico de hip con banda',
       'Plancha frontal','Dead bug','Elevación de piernas acostada','Bicicleta',
     ]
   },
   'Piernas': {
     icon: '🦵', color: 'var(--teal)',
     ejercicios: [
-      'Prensa de piernas','Prensa a fallo',
+      'Prensa de piernas',
       'Extensión de cuádriceps en máquina','Curl de isquiotibiales acostada',
       'Estocadas con mancuernas (lunges)','Sentadilla sumo con mancuerna',
-      'Bulgarian split squat con mancuernas','Elevación de pantorrillas de pie',
+      'Elevación de pantorrillas de pie',
       'Remo con mancuerna unilateral',
       'Crunch clásico','Reverse crunch','Toe touches','Hollow hold',
     ]
@@ -916,7 +1097,7 @@ const RUTINAS_PLAN = {
       'Curl con barra EZ','Curl con mancuernas alterno','Curl martillo','Curl en polea baja',
       'Extensión tríceps polea alta','Fondos en banco (dips)','Kickback de tríceps con mancuerna',
       'Pullover con mancuerna','Press francés con mancuerna',
-      'Russian twist','Woodchop en polea','Bicicleta','Plancha lateral con toque de cadera',
+      'Russian twist','Woodchop en polea','Crunch con giro','Bicicleta','Plancha lateral con toque de cadera',
     ]
   },
   'Hombros': {
@@ -924,10 +1105,10 @@ const RUTINAS_PLAN = {
     ejercicios: [
       'Press militar con mancuernas sentada','Elevación frontal con mancuernas',
       'Elevación lateral con mancuernas','Remo al mentón con barra',
-      'Reverse fly con mancuernas','Face pull en polea con cuerda',
+      'Face pull en polea con cuerda',
       'Pájaros en peck deck invertida','Encogimiento de trapecios (shrugs)',
       'Ab wheel / roll-out','Bird dog','Plancha con toque de hombro',
-      'Plancha frontal con elevación de pierna',
+      'Plancha abdominal con pierna elevada',
     ]
   },
   'Glúteos Extra (comodín)': {
@@ -962,19 +1143,91 @@ function matchEjercicioCanónico(nombre, listaCanónica) {
   // Match exacto
   const exacto = listaCanónica.find(c => c.toLowerCase() === n);
   if (exacto) return exacto;
-  // Match parcial (≥2 palabras en común)
+  // Palabras genéricas que no deben contar como match significativo
+  const STOP_WORDS = new Set(['con','sin','los','las','del','una','unos','unas','para','por','que','mancuernas','mancuerna','barra','polea','banco','maquina']);
+  // Match parcial — requiere ≥2 palabras significativas en común
+  // y al menos 50% de overlap respecto al canónico
   for (const c of listaCanónica) {
-    const palabrasC = c.toLowerCase().split(/\s+/).filter(w => w.length > 3);
-    const palabrasN = n.split(/\s+/).filter(w => w.length > 3);
+    const palabrasC = c.toLowerCase().split(/\s+/).filter(w => w.length > 3 && !STOP_WORDS.has(w));
+    const palabrasN = n.split(/\s+/).filter(w => w.length > 3 && !STOP_WORDS.has(w));
     const comunes = palabrasC.filter(w => palabrasN.includes(w));
-    if (comunes.length >= 2) return c;
+    const overlap = palabrasC.length > 0 ? comunes.length / palabrasC.length : 0;
+    if (comunes.length >= 2 && overlap >= 0.5) return c;
   }
   return null;
 }
 
 let progFiltroActual = 'Todos';
 
+function renderVolumenSemanal(){
+  // Agrupar sesiones por semana (lun-dom) y rutina, sumando series totales
+  const gymTipos=['Glúteos','Piernas','Brazos','Hombros','Glúteos Extra (comodín)'];
+  const colores={'Glúteos':'var(--purple)','Piernas':'var(--teal)','Brazos':'var(--amber)','Hombros':'var(--blue)','Glúteos Extra (comodín)':'var(--coral)'};
+  const iconos={'Glúteos':'🍑','Piernas':'🦵','Brazos':'💪','Hombros':'🏋️','Glúteos Extra (comodín)':'🍑✨'};
+
+  function getWeekKey(fecha){
+    const d=new Date(fecha+'T12:00:00');
+    const dow=d.getDay(); const diff=dow===0?-6:1-dow;
+    const lun=new Date(d); lun.setDate(d.getDate()+diff);
+    return lun.toISOString().split('T')[0];
+  }
+  function parseSeries(detalle){
+    // Intenta extraer el número de series de strings como "4 x 12", "3 x 15 c/l", "3 x 30 seg", etc.
+    const m=detalle.match(/^(\d+)\s*x/i); return m?parseInt(m[1]):null;
+  }
+
+  const semanas={};
+  ENTRENO_DAYS.forEach(fecha=>{
+    const s=DATA.entreno[fecha];
+    if(!gymTipos.includes(s.tipo)) return;
+    const wk=getWeekKey(fecha);
+    if(!semanas[wk]) semanas[wk]={};
+    if(!semanas[wk][s.tipo]) semanas[wk][s.tipo]=0;
+    s.ejercicios.forEach(e=>{
+      const n=parseSeries(e.detalle);
+      if(n) semanas[wk][s.tipo]+=n;
+    });
+  });
+
+  const semKeys=Object.keys(semanas).sort();
+  if(semKeys.length===0){document.getElementById('volumen-semanal').innerHTML='<div class="card"><div class="empty">Sin datos aún</div></div>';return;}
+
+  // Max para escala
+  const allVals=semKeys.flatMap(wk=>gymTipos.map(t=>semanas[wk][t]||0));
+  const maxVal=Math.max(...allVals,1);
+
+  const semLabels=semKeys.map(wk=>{const d=new Date(wk+'T12:00:00');return`${d.getDate()}/${d.getMonth()+1}`;});
+
+  let html='<div class="bars-card" style="overflow-x:auto"><div style="min-width:320px">';
+  // Leyenda
+  html+=`<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">`;
+  gymTipos.forEach(t=>{ html+=`<span style="font-size:11px;display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:${colores[t]};display:inline-block"></span>${iconos[t]} ${t}</span>`; });
+  html+='</div>';
+  // Barras agrupadas por semana
+  html+='<div style="display:flex;gap:12px;align-items:flex-end">';
+  semKeys.forEach((wk,i)=>{
+    html+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">`;
+    html+=`<div style="display:flex;align-items:flex-end;gap:2px;height:80px">`;
+    gymTipos.forEach(t=>{
+      const v=semanas[wk][t]||0;
+      const h=v?Math.max(4,Math.round((v/maxVal)*72)):0;
+      html+=`<div title="${t}: ${v} series" style="width:10px;height:${h}px;background:${colores[t]};border-radius:2px 2px 0 0;opacity:${v?'1':'0.15'}"></div>`;
+    });
+    html+=`</div>`;
+    html+=`<div style="font-size:10px;color:var(--text3);margin-top:4px;text-align:center">${semLabels[i]}</div>`;
+    // Total series esa semana
+    const total=gymTipos.reduce((a,t)=>a+(semanas[wk][t]||0),0);
+    html+=`<div style="font-size:10px;font-weight:600;color:var(--text2)">${total}</div>`;
+    html+='</div>';
+  });
+  html+='</div>';
+  html+='<div style="font-size:10px;color:var(--text3);margin-top:8px">Número = total de series en la semana (lun–dom)</div>';
+  html+='</div></div>';
+  document.getElementById('volumen-semanal').innerHTML=html;
+}
+
 function renderProgresion() {
+  renderVolumenSemanal();
   // Construir mapa: rutina → ejercicio_canónico → [{fecha, peso, pesoKg, detalle, pausa, incompleto}]
   const historial = {}; // { 'Glúteos': { 'Hip thrust con barra': [...] } }
   Object.keys(RUTINAS_PLAN).forEach(r => { historial[r] = {}; });
@@ -1124,6 +1377,85 @@ function changeDay(d){const n=idxN+d;if(n>=0&&n<DAYS_ORDER.length){idxN=n;render
 function changeDayE(d){const n=idxE+d;if(n>=0&&n<ENTRENO_DAYS.length){idxE=n;renderEntreno();}}
 function changeDayB(d){const n=idxB+d;if(n>=0&&n<BIENESTAR_DAYS.length){idxB=n;renderBienestar();}}
 function switchTab(id,el){document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.getElementById('panel-'+id).classList.add('active');if(id==='semana')renderSemana();if(id==='progresion')renderProgresion();}
+
+function renderDonut(t){
+  const total = t.prot*4 + t.carbs*4 + t.fat*9;
+  if(!total){ document.getElementById('donut-macros').innerHTML=''; return; }
+  const slices=[
+    {label:'Proteína',val:t.prot*4,color:'var(--teal)',g:'g',raw:t.prot},
+    {label:'Carbos',val:t.carbs*4,color:'var(--amber)',g:'g',raw:t.carbs},
+    {label:'Grasas',val:t.fat*9,color:'var(--purple)',g:'g',raw:t.fat},
+  ];
+  const cx=70,cy=70,r=52,ri=34;
+  let angle=-Math.PI/2;
+  let paths='';
+  slices.forEach(s=>{
+    const sweep=2*Math.PI*(s.val/total);
+    const x1=cx+r*Math.cos(angle), y1=cy+r*Math.sin(angle);
+    const x2=cx+r*Math.cos(angle+sweep), y2=cy+r*Math.sin(angle+sweep);
+    const xi1=cx+ri*Math.cos(angle), yi1=cy+ri*Math.sin(angle);
+    const xi2=cx+ri*Math.cos(angle+sweep), yi2=cy+ri*Math.sin(angle+sweep);
+    const large=sweep>Math.PI?1:0;
+    paths+=`<path d="M${xi1},${yi1} L${x1},${y1} A${r},${r} 0 ${large} 1 ${x2},${y2} L${xi2},${yi2} A${ri},${ri} 0 ${large} 0 ${xi1},${yi1} Z" fill="${s.color}" opacity="0.85"/>`;
+    angle+=sweep;
+  });
+  const legend=slices.map(s=>`<div style="display:flex;align-items:center;gap:6px;font-size:12px"><span style="width:10px;height:10px;border-radius:50%;background:${s.color};display:inline-block;flex-shrink:0"></span><span style="color:var(--text2)">${s.label}</span><span style="font-weight:600;margin-left:auto">${s.raw}g <span style="color:var(--text3);font-weight:400">(${Math.round(s.val/total*100)}%)</span></span></div>`).join('');
+  document.getElementById('donut-macros').innerHTML=`
+    <div class="bars-card" style="display:flex;align-items:center;gap:16px">
+      <svg viewBox="0 0 140 140" style="width:100px;height:100px;flex-shrink:0">
+        ${paths}
+        <text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">${t.kcal}</text>
+        <text x="${cx}" y="${cy+10}" text-anchor="middle" font-size="9" fill="var(--text3)">kcal</text>
+      </svg>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px">${legend}</div>
+    </div>`;
+}
+
+function toLocalDate(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${day}`;}
+
+function renderSemanaVsAnterior(){
+  const hoy=new Date();
+  // Semana actual: lun a dom (usando fecha local, no UTC)
+  const dow=hoy.getDay(); // 0=dom
+  const diffLun=dow===0?-6:1-dow;
+  const lunes=new Date(hoy); lunes.setDate(hoy.getDate()+diffLun);
+  const semActual=[], semAnt=[];
+  for(let i=0;i<7;i++){
+    const d=new Date(lunes); d.setDate(lunes.getDate()+i);
+    semActual.push(toLocalDate(d));
+    const da=new Date(lunes); da.setDate(lunes.getDate()+i-7);
+    semAnt.push(toLocalDate(da));
+  }
+  const avg=(days,key)=>{const vals=days.map(d=>DATA.nutricion[d]?.totals[key]).filter(v=>v!=null);return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):null;};
+  const macros=[{key:'kcal',lbl:'Kcal',unit:'',goal:GOALS.kcal},{key:'prot',lbl:'Prot',unit:'g',goal:GOALS.prot},{key:'carbs',lbl:'Carbos',unit:'g',goal:GOALS.carbs},{key:'fat',lbl:'Grasas',unit:'g',goal:GOALS.fat}];
+  const rows=macros.map(m=>{
+    const a=avg(semActual,m.key), b=avg(semAnt,m.key);
+    const diff=a!=null&&b!=null?a-b:null;
+    const arrow=diff==null?'—':diff>0?`<span style="color:var(--coral)">▲${Math.abs(diff)}${m.unit}</span>`:`<span style="color:var(--teal)">▼${Math.abs(diff)}${m.unit}</span>`;
+    const pctA=a!=null?Math.round(a/m.goal*100):null;
+    return`<div class="summary-row">
+      <span style="font-weight:600;font-size:12px">${m.lbl}</span>
+      <span style="font-size:12px">${b!=null?b+m.unit:'—'} → <strong>${a!=null?a+m.unit:'—'}</strong></span>
+      <span style="font-size:12px">${arrow}${pctA!=null?` <span style="color:var(--text3);font-size:11px">(${pctA}% obj)</span>`:''}</span>
+    </div>`;
+  }).join('');
+  // Conteo entrenamientos
+  const gymTipos=new Set(['Glúteos','Piernas','Brazos','Hombros','Glúteos Extra (comodín)']);
+  const entrSem=semActual.filter(d=>gymTipos.has(DATA.entreno[d]?.tipo)).length;
+  const entrAnt=semAnt.filter(d=>gymTipos.has(DATA.entreno[d]?.tipo)).length;
+  const yogaSem=semActual.filter(d=>DATA.entreno[d]?.tipo==='Yoga'||DATA.entreno[d]?.dobleActividad==='Yoga').length;
+  const bAvg=(days,key)=>{const vals=days.map(d=>DATA.bienestar[d]?.[key]).filter(v=>v!=null);return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):null;};
+  const bRow=`<div class="summary-row">
+    <span style="font-weight:600;font-size:12px">Bienestar</span>
+    <span style="font-size:12px">⚡${bAvg(semAnt,'energia')||'—'} → <strong>⚡${bAvg(semActual,'energia')||'—'}</strong></span>
+    <span style="font-size:12px">😴${bAvg(semAnt,'sueno')||'—'} → <strong>😴${bAvg(semActual,'sueno')||'—'}</strong></span>
+  </div>`;
+  const gymsLabel=`<div class="summary-row"><span style="font-weight:600;font-size:12px">Gym</span><span style="font-size:12px">${entrAnt} sesiones → <strong>${entrSem} sesiones</strong></span><span style="font-size:12px;color:var(--text3)">${yogaSem} yoga esta semana</span></div>`;
+  const hasDatos=semActual.some(d=>DATA.nutricion[d])||semAnt.some(d=>DATA.nutricion[d]);
+  document.getElementById('semana-vs-anterior').innerHTML=hasDatos
+    ?`<div class="card"><div style="font-size:11px;color:var(--text3);margin-bottom:10px">Sem. ant. → Esta semana (promedio diario)</div>${rows}${bRow}${gymsLabel}</div>`
+    :'<div class="card"><div class="empty">Sin datos suficientes</div></div>';
+}
 
 renderNutricion();renderEntreno();renderBienestar();
 </script>
